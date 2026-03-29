@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://solrudd.com/sitemap.xml
+Sitemap: https://solrudd.co.uk/sitemap.xml
