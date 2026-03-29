@@ -97,6 +97,8 @@ const MARQUEE_ITEMS = [
   "ZERO FLUFF",
 ];
 
+const MARQUEE_REPEATS = [0, 1, 2, 3];
+
 const TERM_LINES = [
   { sym: "✓", cls: "term-green",  text: "Jigma v1.0 — shipped" },
   { sym: "✓", cls: "term-green",  text: "GardenVisionary — live" },
@@ -110,6 +112,16 @@ const TERM_LINES = [
 export default function SolRuddLanding() {
   useEffect(() => {
     const root = document.documentElement;
+    const revealElements = document.querySelectorAll(".reveal");
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const supportsPointerEffects =
+      window.matchMedia("(pointer: fine)").matches && !prefersReducedMotion;
+
+    if (prefersReducedMotion) {
+      revealElements.forEach((element) => element.classList.add("revealed"));
+      return undefined;
+    }
+
     let frame = 0;
     let nextX = 0;
     let nextY = 0;
@@ -129,9 +141,10 @@ export default function SolRuddLanding() {
       }
     };
 
-    window.addEventListener("mousemove", onMove);
+    if (supportsPointerEffects) {
+      window.addEventListener("mousemove", onMove, { passive: true });
+    }
 
-    const els = document.querySelectorAll(".reveal");
     const io = new IntersectionObserver(
       (entries) =>
         entries.forEach((entry) => {
@@ -144,10 +157,12 @@ export default function SolRuddLanding() {
         }),
       { threshold: 0.08 }
     );
-    els.forEach((el) => io.observe(el));
+    revealElements.forEach((element) => io.observe(element));
 
     return () => {
-      window.removeEventListener("mousemove", onMove);
+      if (supportsPointerEffects) {
+        window.removeEventListener("mousemove", onMove);
+      }
 
       if (frame) {
         window.cancelAnimationFrame(frame);
@@ -171,7 +186,7 @@ export default function SolRuddLanding() {
       {/* Marquee band */}
       <div className="marquee-band">
         <div className="marquee-track">
-          {[...Array(4)].map((_, i) => (
+          {MARQUEE_REPEATS.map((i) => (
             <span key={i} className="marquee-content">
               {MARQUEE_ITEMS.map((t) => (
                 <span className="mq-item" key={t}><span className="mq-dot">◆</span>{t}</span>
