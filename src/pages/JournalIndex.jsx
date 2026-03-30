@@ -19,6 +19,7 @@ const COVERAGE_AREAS = [
 
 export default function JournalIndex() {
   const [featuredPost, ...archivePosts] = posts;
+  const nextReadPost = archivePosts[0] ?? featuredPost;
 
   usePageMetadata({
     title: buildPageTitle("Journal"),
@@ -28,6 +29,36 @@ export default function JournalIndex() {
     keywords: ["founder notes", "frontend systems", "AI workflows", "product breakdowns"],
     schema: [...getBaseSchema(), getJournalSchema()],
   });
+
+  if (!featuredPost) {
+    return (
+      <EditorialLayout mainClassName="journal-page">
+        <section className="journal-hero">
+          <div className="wrap">
+            <div className="journal-hero-grid">
+              <div className="journal-hero-copy reveal revealed">
+                <div className="eyebrow">
+                  <IconPen /> Journal
+                </div>
+                <h1 className="journal-title">Operator notes, build logs, and technical essays.</h1>
+                <p className="journal-body">
+                  New notes are being prepared. The journal route is live and ready for future publishing.
+                </p>
+                <div className="journal-meta-row">
+                  <a href={buildHomeSectionPath("work")} className="journal-inline-link">
+                    Selected Work <IconArrow size={12} />
+                  </a>
+                  <a href={buildHomeSectionPath("contact")} className="journal-inline-link">
+                    Start a project <IconArrow size={12} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </EditorialLayout>
+    );
+  }
 
   return (
     <EditorialLayout mainClassName="journal-page">
@@ -145,7 +176,7 @@ export default function JournalIndex() {
                   <a href={buildHomeSectionPath("work")} className="journal-inline-link">
                     Product index <IconArrow size={12} />
                   </a>
-                  <a href={buildJournalPostPath(archivePosts[0].slug)} className="journal-inline-link">
+                  <a href={buildJournalPostPath(nextReadPost.slug)} className="journal-inline-link">
                     Next read <IconArrow size={12} />
                   </a>
                 </div>

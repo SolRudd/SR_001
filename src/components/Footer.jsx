@@ -1,15 +1,10 @@
-const FOOTER_LINKS = [
-  { label: "Work",    href: "/#work"    },
-  { label: "Build",   href: "/#build"   },
-  { label: "Signal",  href: "/#signal"  },
-  { label: "Journal", href: "/journal/" },
-  { label: "Contact", href: "/#contact" },
-];
+import { FOOTER_NAV_LINKS } from "../content/navigation";
+import { CONTACT_EMAIL, GITHUB_URL, LINKEDIN_URL, X_URL } from "../content/site";
 
 const SOCIALS = [
-  { label: "X / Twitter", href: "https://twitter.com/solrudd",          sym: "X" },
-  { label: "GitHub",      href: "https://github.com/solrudd",           sym: "GH" },
-  { label: "LinkedIn",    href: "https://linkedin.com/in/solrudd",      sym: "IN" },
+  { label: "X / Twitter", href: X_URL,        sym: "X" },
+  { label: "GitHub",      href: GITHUB_URL,   sym: "GH" },
+  { label: "LinkedIn",    href: LINKEDIN_URL, sym: "IN" },
 ];
 
 const STATUS_ITEMS = [
@@ -41,8 +36,8 @@ export default function Footer() {
               Building premium websites,<br />
               AI products &amp; agentic systems.
             </p>
-            <a href="mailto:hello@solrudd.com" className="ftr-email">
-              hello@solrudd.com
+            <a href={`mailto:${CONTACT_EMAIL}`} className="ftr-email">
+              {CONTACT_EMAIL}
             </a>
           </div>
 
@@ -50,7 +45,7 @@ export default function Footer() {
           <div className="ftr-col">
             <div className="ftr-col-label">// Navigate</div>
             <ul className="ftr-list">
-              {FOOTER_LINKS.map(({ label, href }) => (
+              {FOOTER_NAV_LINKS.map(({ label, href }) => (
                 <li key={label}>
                   <a href={href} className="ftr-link">
                     <span className="ftr-link-arr">&gt;</span>

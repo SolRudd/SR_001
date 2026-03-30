@@ -1,5 +1,7 @@
 export const HOME_PATH = "/";
 export const JOURNAL_INDEX_PATH = "/journal/";
+export const SOCIAL_LAUNCH_CARD_PATH = "/preview/social-launch-card/";
+export const SOCIAL_LAUNCH_CARD_MINIMAL_PATH = "/preview/social-launch-card/minimal/";
 
 export function buildJournalPostPath(slug) {
   return `/journal/${slug}/`;
@@ -29,6 +31,14 @@ export function resolveRoute(pathname = "/") {
 
   if (normalized === "/journal") {
     return { type: "journal-index" };
+  }
+
+  if (normalized === "/preview/social-launch-card") {
+    return { type: "social-launch-card" };
+  }
+
+  if (normalized === "/preview/social-launch-card/minimal") {
+    return { type: "social-launch-card-minimal" };
   }
 
   if (normalized.startsWith("/journal/")) {

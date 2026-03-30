@@ -4,6 +4,12 @@ import greentracerSignalProduct from "./greentracer-signal-product";
 import whatActuallyMakesModernDigitalDeliveryWork from "./what-actually-makes-modern-digital-delivery-work";
 import whyGoodDigitalWorkUsuallyComesFromSpecialistTeams from "./why-good-digital-work-usually-comes-from-specialist-teams";
 
+const POST_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+});
+
 const POSTS = [
   whatActuallyMakesModernDigitalDeliveryWork,
   whyGoodDigitalWorkUsuallyComesFromSpecialistTeams,
@@ -32,9 +38,5 @@ export function getRelatedPosts(post, limit = 2) {
 }
 
 export function formatPostDate(dateValue) {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  }).format(new Date(dateValue));
+  return POST_DATE_FORMATTER.format(new Date(dateValue));
 }

@@ -1,7 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { buildPageTitle, DEFAULT_DESCRIPTION } from "../content/site";
+import {
+  BOOKING_URL,
+  CONTACT_EMAIL,
+  buildPageTitle,
+  DEFAULT_DESCRIPTION,
+} from "../content/site";
 import { usePageMetadata } from "../lib/metadata";
 import { getBaseSchema } from "../lib/schema";
 import {
@@ -17,24 +22,24 @@ import {
 
 const PROJECTS = [
   {
-    num: "01", tag: "AI Tool", name: "Jigma", url: "https://jigma.co.uk/",
-    body: "Design prompt tool. Upload a design screenshot, get a valid high-fidelity prompt to generate the frontend.",
-    icon: <IconPen size={20} />, accent: "#00d4ff"
-  },
-  {
-    num: "02", tag: "AI App", name: "GardenVisionary", url: "https://gardenvisionary.co.uk/",
-    body: "An experimental AI-powered application for garden design, vision, and exterior spatial planning.",
-    icon: <IconRadar size={20} />, accent: "#00ff88"
-  },
-  {
-    num: "03", tag: "Agency", name: "BuzzBoost", url: "https://buzzboost.co.uk/",
+    num: "01", tag: "Agency", name: "BuzzBoost", url: "https://buzzboost.co.uk/",
     body: "Digital marketing and founder-led web development focused on sharper landing pages and commercial clarity.",
     icon: <IconBolt size={20} color="currentColor" />, accent: "#ffcc00"
   },
   {
-    num: "04", tag: "SaaS / Tool", name: "GreenTracer", url: "https://www.greentracer.org/",
+    num: "02", tag: "AI Tool", name: "Jigma", url: "https://jigma.co.uk/",
+    body: "Design prompt tool. Upload a design screenshot, get a valid high-fidelity prompt to generate the frontend.",
+    icon: <IconPen size={20} />, accent: "#00d4ff"
+  },
+  {
+    num: "03", tag: "SaaS / Tool", name: "GreenTracer", url: "https://www.greentracer.org/",
     body: "Website carbon footprint analysis, credibility tooling, and infrastructure around digital sustainability.",
     icon: <IconShield size={20} />, accent: "#00ff88"
+  },
+  {
+    num: "04", tag: "AI App", name: "GardenVisionary", url: "https://gardenvisionary.co.uk/",
+    body: "An experimental AI-powered application for garden design, vision, and exterior spatial planning.",
+    icon: <IconRadar size={20} />, accent: "#00ff88"
   },
   {
     num: "05", tag: "Plugin", name: "LoveCookies", url: "https://lovecookies.co.uk/",
@@ -113,6 +118,9 @@ const TERM_LINES = [
 ];
 
 export default function SolRuddLanding() {
+  const pageRef = useRef(null);
+  const glowRef = useRef(null);
+
   usePageMetadata({
     title: buildPageTitle(),
     description: DEFAULT_DESCRIPTION,
@@ -121,11 +129,21 @@ export default function SolRuddLanding() {
   });
 
   useEffect(() => {
-    const root = document.documentElement;
-    const revealElements = document.querySelectorAll(".reveal:not(.revealed)");
+    const pageElement = pageRef.current;
+    const glowElement = glowRef.current;
+
+    if (!pageElement) {
+      return undefined;
+    }
+
+    const revealElements = pageElement.querySelectorAll(".reveal:not(.revealed)");
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const supportsPointerEffects =
       window.matchMedia("(pointer: fine)").matches && !prefersReducedMotion;
+
+    if (!revealElements.length && !supportsPointerEffects) {
+      return undefined;
+    }
 
     if (prefersReducedMotion) {
       revealElements.forEach((element) => element.classList.add("revealed"));
@@ -138,8 +156,11 @@ export default function SolRuddLanding() {
 
     const flushMousePosition = () => {
       frame = 0;
-      root.style.setProperty("--mx", `${nextX}px`);
-      root.style.setProperty("--my", `${nextY}px`);
+
+      if (glowElement) {
+        glowElement.style.setProperty("--mx", `${nextX}px`);
+        glowElement.style.setProperty("--my", `${nextY}px`);
+      }
     };
 
     const onMove = (e) => {
@@ -151,26 +172,30 @@ export default function SolRuddLanding() {
       }
     };
 
-    if (supportsPointerEffects) {
+    if (supportsPointerEffects && glowElement) {
       window.addEventListener("mousemove", onMove, { passive: true });
     }
 
-    const io = new IntersectionObserver(
-      (entries) =>
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            return;
-          }
+    const io =
+      revealElements.length > 0
+        ? new IntersectionObserver(
+            (entries) =>
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) {
+                  return;
+                }
 
-          entry.target.classList.add("revealed");
-          io.unobserve(entry.target);
-        }),
-      { threshold: 0.08 }
-    );
-    revealElements.forEach((element) => io.observe(element));
+                entry.target.classList.add("revealed");
+                io.unobserve(entry.target);
+              }),
+            { threshold: 0.08 }
+          )
+        : null;
+
+    revealElements.forEach((element) => io?.observe(element));
 
     return () => {
-      if (supportsPointerEffects) {
+      if (supportsPointerEffects && glowElement) {
         window.removeEventListener("mousemove", onMove);
       }
 
@@ -178,15 +203,15 @@ export default function SolRuddLanding() {
         window.cancelAnimationFrame(frame);
       }
 
-      io.disconnect();
+      io?.disconnect();
     };
   }, []);
 
   return (
-    <>
+    <div ref={pageRef}>
       <div className="noise" />
       <div className="bg-grid" />
-      <div className="cursor-glow" />
+      <div className="cursor-glow" ref={glowRef} />
       <div className="blob blob-1" />
       <div className="blob blob-2" />
       <div className="blob blob-3" />
@@ -312,10 +337,10 @@ export default function SolRuddLanding() {
         <div className="wrap">
           <div className="sec-head reveal">
             <div className="eyebrow"><IconRadar /> Selected Work</div>
-            <h2 className="h2">Products, Agents<br />&amp; Systems.</h2>
+            <h2 className="h2">Websites, Products<br />&amp; Systems.</h2>
             <p className="body">
-              I don't just design screens. I build real software, autonomous AI agents,
-              and founder-led products that ship into the world.
+              From agency sites and founder websites to products, AI agents,
+              and technical systems, I build real software that ships into the world.
             </p>
           </div>
 
@@ -463,9 +488,19 @@ export default function SolRuddLanding() {
                     </div>
                   ))}
                 </div>
-                <a href="mailto:hello@solrudd.com" className="btn btn-cta">
-                  Init Project <IconArrow />
-                </a>
+                <div className="contact-actions">
+                  <a
+                    href={BOOKING_URL}
+                    className="btn btn-cta"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Book a Call <IconArrow />
+                  </a>
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="contact-email-link">
+                    Email {CONTACT_EMAIL}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -473,6 +508,6 @@ export default function SolRuddLanding() {
       </section>
 
       <Footer />
-    </>
+    </div>
   );
 }

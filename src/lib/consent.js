@@ -68,6 +68,13 @@ function updateConsentCache(nextConsent) {
   syncConsentDataset(consentCache)
 }
 
+function handleStorageEvent(event) {
+  if (event.key === CONSENT_STORAGE_KEY) {
+    updateConsentCache(readStoredConsent())
+    emitChange()
+  }
+}
+
 export function getConsentSnapshot() {
   return consentCache
 }
@@ -112,10 +119,13 @@ export function useConsentState() {
 
 if (typeof window !== 'undefined') {
   updateConsentCache(readStoredConsent())
-  window.addEventListener('storage', (event) => {
-    if (event.key === CONSENT_STORAGE_KEY) {
-      updateConsentCache(readStoredConsent())
-      emitChange()
+  window.addEventListener('storage', handleStorageEvent)
+}
+
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('storage', handleStorageEvent)
     }
   })
 }

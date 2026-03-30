@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-
-const NAV_LINKS = [
-  { label: "Work",    href: "/#work"    },
-  { label: "Journal", href: "/journal/" },
-  { label: "Build",   href: "/#build"   },
-  { label: "Signal",  href: "/#signal"  },
-];
+import { PRIMARY_NAV_LINKS } from "../content/navigation";
+import { CONTACT_EMAIL } from "../content/site";
 
 export default function Header() {
   const [open,      setOpen]      = useState(false);
@@ -51,6 +46,43 @@ export default function Header() {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
+  useEffect(() => {
+    if (!open) {
+      return undefined;
+    }
+
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
+    const desktopQuery = window.matchMedia("(min-width: 861px)");
+    const onDesktopChange = (event) => {
+      if (event.matches) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+
+    if (desktopQuery.addEventListener) {
+      desktopQuery.addEventListener("change", onDesktopChange);
+    } else {
+      desktopQuery.addListener(onDesktopChange);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+
+      if (desktopQuery.removeEventListener) {
+        desktopQuery.removeEventListener("change", onDesktopChange);
+      } else {
+        desktopQuery.removeListener(onDesktopChange);
+      }
+    };
+  }, [open]);
+
   const close = () => setOpen(false);
 
   return (
@@ -66,7 +98,7 @@ export default function Header() {
 
           {/* Desktop nav */}
           <nav className="hdr-nav" aria-label="Main navigation">
-            {NAV_LINKS.map(({ label, href }) => (
+            {PRIMARY_NAV_LINKS.map(({ label, href }) => (
               <a key={label} href={href} className="hdr-link">
                 <span className="hdr-link-arrow">&gt;</span>
                 {label}
@@ -100,7 +132,7 @@ export default function Header() {
         <div className="mob-menu-inner">
           <div className="mob-menu-label">// Navigation</div>
           <nav className="mob-nav">
-            {NAV_LINKS.map(({ label, href }, i) => (
+            {PRIMARY_NAV_LINKS.map(({ label, href }, i) => (
               <a
                 key={label}
                 href={href}
@@ -120,7 +152,7 @@ export default function Header() {
             <div className="mob-status">
               <span className="mob-dot" /> Open for deployment
             </div>
-            <a href="mailto:hello@solrudd.com" className="mob-cta" onClick={close}>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="mob-cta" onClick={close}>
               Init Project
             </a>
           </div>

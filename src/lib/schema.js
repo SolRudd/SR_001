@@ -1,8 +1,11 @@
 import {
   DEFAULT_DESCRIPTION,
   DEFAULT_OG_IMAGE,
+  GITHUB_URL,
+  LINKEDIN_URL,
   SITE_NAME,
   SITE_URL,
+  X_URL,
   buildAbsoluteUrl,
 } from "../content/site";
 import { buildJournalPostPath } from "./routes";
@@ -12,9 +15,9 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 const JOURNAL_ID = `${SITE_URL}/journal/#blog`;
 
 const SAME_AS = [
-  "https://twitter.com/solrudd",
-  "https://github.com/solrudd",
-  "https://linkedin.com/in/solrudd",
+  X_URL,
+  GITHUB_URL,
+  LINKEDIN_URL,
 ];
 
 export function getBaseSchema() {

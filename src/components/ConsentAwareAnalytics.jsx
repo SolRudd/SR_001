@@ -15,11 +15,17 @@ export default function ConsentAwareAnalytics() {
 
     let isActive = true
 
-    import('@vercel/analytics/react').then(({ Analytics }) => {
-      if (isActive) {
-        setVercelAnalytics(() => Analytics)
-      }
-    })
+    import('@vercel/analytics/react')
+      .then(({ Analytics }) => {
+        if (isActive) {
+          setVercelAnalytics(() => Analytics)
+        }
+      })
+      .catch(() => {
+        if (isActive) {
+          setVercelAnalytics(null)
+        }
+      })
 
     return () => {
       isActive = false
