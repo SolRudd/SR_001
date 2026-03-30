@@ -1,12 +1,14 @@
+import { Suspense, lazy } from "react";
 import SolRuddLandingPage from "./pages/SolRuddLanding";
 import JournalIndex from "./pages/JournalIndex";
 import JournalArticle from "./pages/JournalArticle";
 import NotFound from "./pages/NotFound";
-import SocialLaunchCardPreview from "./pages/SocialLaunchCardPreview";
 import ConsentAwareAnalytics from "./components/ConsentAwareAnalytics";
 import CookieConsentBanner from "./components/CookieConsentBanner";
 import { getPostBySlug } from "./content/posts";
 import { resolveRoute } from "./lib/routes";
+
+const SocialLaunchCardPreview = lazy(() => import("./pages/SocialLaunchCardPreview"));
 
 export default function App() {
   const searchParams = new URLSearchParams(window.location.search);
@@ -23,11 +25,23 @@ export default function App() {
     const post = getPostBySlug(route.slug);
     page = post ? <JournalArticle post={post} /> : <NotFound />;
   } else if (route.type === "social-launch-card") {
-    page = <SocialLaunchCardPreview />;
+    page = (
+      <Suspense fallback={null}>
+        <SocialLaunchCardPreview />
+      </Suspense>
+    );
   } else if (route.type === "social-launch-card-final") {
-    page = <SocialLaunchCardPreview forceExport />;
+    page = (
+      <Suspense fallback={null}>
+        <SocialLaunchCardPreview forceExport />
+      </Suspense>
+    );
   } else if (route.type === "social-launch-card-minimal") {
-    page = <SocialLaunchCardPreview variant="minimal" />;
+    page = (
+      <Suspense fallback={null}>
+        <SocialLaunchCardPreview variant="minimal" />
+      </Suspense>
+    );
   }
 
   const shouldRenderGlobalChrome =

@@ -111,7 +111,7 @@ export default function JournalIndex() {
 
       <div className="hr" />
 
-      <section className="sec journal-archive">
+      <section className="sec journal-archive defer-section">
         <div className="wrap">
           <div className="journal-archive-grid">
             <div className="journal-list-wrap reveal revealed">

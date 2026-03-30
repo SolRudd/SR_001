@@ -29,8 +29,13 @@ export default function Footer() {
           {/* Brand col */}
           <div className="ftr-brand">
             <a href="/" className="ftr-logo">
-              <span className="ftr-logo-dot" />
-              <span className="ftr-logo-text">SOL<span className="ftr-logo-sep">/</span>RUDD</span>
+              <img
+                src="/brand/sol-rudd.svg"
+                alt="Sol Rudd"
+                className="ftr-logo-mark"
+                width="250"
+                height="59"
+              />
             </a>
             <p className="ftr-tagline">
               Building premium websites,<br />

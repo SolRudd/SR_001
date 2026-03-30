@@ -92,8 +92,13 @@ export default function Header() {
 
           {/* Logo */}
           <a href="/" className="hdr-logo" onClick={close}>
-            <span className="hdr-logo-dot" />
-            <span className="hdr-logo-text">SOL<span className="hdr-logo-sep">/</span>RUDD</span>
+            <img
+              src="/brand/sol-rudd.svg"
+              alt="Sol Rudd"
+              className="hdr-logo-mark"
+              width="250"
+              height="59"
+            />
           </a>
 
           {/* Desktop nav */}

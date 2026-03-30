@@ -323,7 +323,7 @@ export default function SolRuddLanding() {
         </div>
       </section>
 
-      <section className="stack-sec" aria-labelledby="operator-stack-title">
+      <section className="stack-sec defer-section" aria-labelledby="operator-stack-title">
         <div className="wrap">
           <div className="stack-shell reveal">
             <div className="stack-layout">
@@ -352,7 +352,7 @@ export default function SolRuddLanding() {
       <div className="hr" />
 
       {/* ── WORK ── */}
-      <section id="work" className="sec">
+      <section id="work" className="sec defer-section">
         <div className="wrap">
           <div className="sec-head reveal">
             <div className="eyebrow"><IconRadar /> Selected Work</div>
@@ -396,7 +396,7 @@ export default function SolRuddLanding() {
       <div className="hr" />
 
       {/* ── CAPABILITIES ── */}
-      <section id="build" className="sec">
+      <section id="build" className="sec defer-section">
         <div className="wrap">
           <div className="caps-layout">
             <div className="reveal">
@@ -448,7 +448,7 @@ export default function SolRuddLanding() {
       <div className="hr" />
 
       {/* ── SIGNAL ── */}
-      <section id="signal" className="sec">
+      <section id="signal" className="sec defer-section">
         <div className="wrap">
           <div className="signal-layout">
             <div className="reveal">
@@ -480,7 +480,7 @@ export default function SolRuddLanding() {
       <div className="hr" />
 
       {/* ── CONTACT ── */}
-      <section id="contact" className="sec">
+      <section id="contact" className="sec defer-section">
         <div className="wrap">
           <div className="contact-card reveal">
             <div className="contact-glow" />

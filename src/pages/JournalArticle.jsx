@@ -201,7 +201,7 @@ export default function JournalArticle({ post }) {
 
       <div className="hr" />
 
-      <section className="sec article-more">
+      <section className="sec article-more defer-section">
         <div className="wrap">
           <div className="article-more-shell reveal revealed">
             <div className="sec-head journal-sec-head">
