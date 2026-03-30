@@ -1,8 +1,9 @@
 const FOOTER_LINKS = [
-  { label: "Work",    href: "#work"    },
-  { label: "Build",   href: "#build"   },
-  { label: "Signal",  href: "#signal"  },
-  { label: "Contact", href: "#contact" },
+  { label: "Work",    href: "/#work"    },
+  { label: "Build",   href: "/#build"   },
+  { label: "Signal",  href: "/#signal"  },
+  { label: "Journal", href: "/journal/" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 const SOCIALS = [

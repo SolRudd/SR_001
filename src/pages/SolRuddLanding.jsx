@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { buildPageTitle, DEFAULT_DESCRIPTION } from "../content/site";
+import { usePageMetadata } from "../lib/metadata";
+import { getBaseSchema } from "../lib/schema";
 import {
   IconArrow,
   IconBolt,
@@ -110,9 +113,16 @@ const TERM_LINES = [
 ];
 
 export default function SolRuddLanding() {
+  usePageMetadata({
+    title: buildPageTitle(),
+    description: DEFAULT_DESCRIPTION,
+    pathname: "/",
+    schema: getBaseSchema(),
+  });
+
   useEffect(() => {
     const root = document.documentElement;
-    const revealElements = document.querySelectorAll(".reveal");
+    const revealElements = document.querySelectorAll(".reveal:not(.revealed)");
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const supportsPointerEffects =
       window.matchMedia("(pointer: fine)").matches && !prefersReducedMotion;

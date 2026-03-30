@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
 const NAV_LINKS = [
-  { label: "Work",    href: "#work"    },
-  { label: "Build",   href: "#build"   },
-  { label: "Signal",  href: "#signal"  },
-  { label: "Contact", href: "#contact" },
+  { label: "Work",    href: "/#work"    },
+  { label: "Journal", href: "/journal/" },
+  { label: "Build",   href: "/#build"   },
+  { label: "Signal",  href: "/#signal"  },
 ];
 
 export default function Header() {
@@ -75,7 +75,7 @@ export default function Header() {
           </nav>
 
           {/* Desktop CTA */}
-          <a href="#contact" className="hdr-cta">
+          <a href="/#contact" className="hdr-cta">
             Init Project
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
               <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
