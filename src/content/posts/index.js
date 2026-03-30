@@ -1,8 +1,12 @@
 import buzzboostFounderSiteLog from "./buzzboost-founder-site-log";
 import fromDesignReferenceToProductionReact from "./from-design-reference-to-production-react";
 import greentracerSignalProduct from "./greentracer-signal-product";
+import whatActuallyMakesModernDigitalDeliveryWork from "./what-actually-makes-modern-digital-delivery-work";
+import whyGoodDigitalWorkUsuallyComesFromSpecialistTeams from "./why-good-digital-work-usually-comes-from-specialist-teams";
 
 const POSTS = [
+  whatActuallyMakesModernDigitalDeliveryWork,
+  whyGoodDigitalWorkUsuallyComesFromSpecialistTeams,
   buzzboostFounderSiteLog,
   greentracerSignalProduct,
   fromDesignReferenceToProductionReact,
