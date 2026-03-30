@@ -1,38 +1,29 @@
-import {
-  IconBolt,
-  IconCode,
-  IconPen,
-  IconRadar,
-  IconShield,
-  IconTerm,
-} from "../Icons";
-
 const WORK_ITEMS = [
-  { name: "BuzzBoost", label: "Agency", icon: IconBolt },
-  { name: "Jigma", label: "AI Tool", icon: IconPen },
-  { name: "GreenTracer", label: "Signal Product", icon: IconShield },
-  { name: "GardenVisionary", label: "AI App", icon: IconRadar },
-  { name: "LoveCookies", label: "Plugin", icon: IconCode },
-  { name: "Agents & Workflows", label: "R&D", icon: IconTerm },
+  { name: "BuzzBoost", detail: "Agency site + frontend build" },
+  { name: "Jigma", detail: "AI prompt tool" },
+  { name: "GreenTracer", detail: "Signal product" },
+  { name: "GardenVisionary", detail: "AI app" },
 ];
 
-const STACK_ITEMS = ["React", "TypeScript", "Node.js", "Supabase", "WordPress", "OpenAI"];
-
-const SIGNAL_ITEMS = [
-  "Founder-led frontend systems",
-  "Automation and agent workflows",
-  "Digital products and launch builds",
+const DELIVERY_ITEMS = [
+  { title: "Founder sites", detail: "Sharper positioning and cleaner execution" },
+  { title: "Product builds", detail: "Interfaces and systems built to ship" },
+  { title: "AI workflows", detail: "Automation and operator tooling" },
 ];
 
-const HUD_ROWS = [
-  { key: "Mode", value: "Shipping" },
-  { key: "Focus", value: "Web + AI" },
-  { key: "Status", value: "Live" },
+const STACK_ROWS = [
+  { label: "Frontend", value: "React / TypeScript" },
+  { label: "Systems", value: "Node / Supabase / Vercel" },
+  { label: "Automation", value: "OpenAI / n8n / Stripe" },
 ];
 
-function BrowserPanel() {
+const MINIMAL_WORK_ITEMS = ["BuzzBoost", "Jigma", "GreenTracer"];
+
+function BrowserPanel({ minimal = false, exportMode = false }) {
+  const iframeSrc = exportMode ? "/?surface=og-homepage&export=1" : "/?surface=og-homepage";
+
   return (
-    <div className="og-browser">
+    <div className={`og-browser${minimal ? " og-browser-minimal" : ""}`}>
       <div className="og-browser-bar">
         <div className="og-browser-dots">
           <span />
@@ -42,40 +33,14 @@ function BrowserPanel() {
         <div className="og-browser-url">solrudd.co.uk</div>
       </div>
 
-      <div className="og-browser-body">
-        <div className="og-browser-copy">
-          <div className="og-browser-badge">Live Operator Feed // Active</div>
-          <div className="og-browser-title">
-            <span>websites</span>
-            <span>AI products</span>
-            <span>agentic systems</span>
-          </div>
-          <p className="og-browser-text">
-            Founder-led frontend systems, automation, digital products, and technical delivery.
-          </p>
-        </div>
-
-        <div className="og-browser-hud">
-          <div className="og-browser-hud-label">System HUD</div>
-          <div className="og-browser-hud-grid">
-            {HUD_ROWS.map(({ key, value }) => (
-              <div className="og-browser-hud-row" key={key}>
-                <span>{key}</span>
-                <span>{value}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="og-browser-work">
-          <div className="og-browser-work-label">Selected Work</div>
-          <div className="og-browser-work-list">
-            {WORK_ITEMS.slice(0, 4).map(({ name }) => (
-              <span className="og-browser-work-chip" key={name}>
-                {name}
-              </span>
-            ))}
-          </div>
+      <div className="og-browser-live-stage">
+        <div className={`og-browser-viewport${minimal ? " og-browser-viewport-minimal" : ""}`}>
+          <iframe
+            title="Sol Rudd homepage preview"
+            src={iframeSrc}
+            className={`og-browser-iframe${minimal ? " og-browser-iframe-minimal" : ""}`}
+            loading="eager"
+          />
         </div>
       </div>
     </div>
@@ -92,11 +57,65 @@ function SupportPanel({ label, title, children }) {
   );
 }
 
-export default function SocialLaunchCard({ variant = "primary" }) {
+function PrimarySupportPanels() {
+  return (
+    <div className="og-support-grid">
+      <SupportPanel label="// Selected Work" title="Live products, websites, and launch systems">
+        <div className="og-support-list">
+          {WORK_ITEMS.map(({ name, detail }) => (
+            <div className="og-support-item" key={name}>
+              <span className="og-support-item-name">{name}</span>
+              <span className="og-support-item-detail">{detail}</span>
+            </div>
+          ))}
+        </div>
+      </SupportPanel>
+
+      <SupportPanel label="// Delivery" title="Founder-led frontend systems and technical delivery">
+        <div className="og-support-note-list">
+          {DELIVERY_ITEMS.map(({ title, detail }) => (
+            <div className="og-support-note" key={title}>
+              <span className="og-support-note-title">{title}</span>
+              <span className="og-support-note-detail">{detail}</span>
+            </div>
+          ))}
+        </div>
+      </SupportPanel>
+
+      <SupportPanel label="// Core Stack" title="Build, automation, and infrastructure">
+        <div className="og-support-rows">
+          {STACK_ROWS.map(({ label, value }) => (
+            <div className="og-support-row" key={label}>
+              <span>{label}</span>
+              <span>{value}</span>
+            </div>
+          ))}
+        </div>
+      </SupportPanel>
+    </div>
+  );
+}
+
+function MinimalProofStrip() {
+  return (
+    <div className="og-minimal-proof">
+      <div className="og-minimal-proof-label">// Selected Work</div>
+      <div className="og-minimal-proof-list">
+        {MINIMAL_WORK_ITEMS.map((item) => (
+          <span className="og-minimal-proof-chip" key={item}>
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function SocialLaunchCard({ variant = "primary", exportMode = false }) {
   const isMinimal = variant === "minimal";
 
   return (
-    <div className={`og-launch-card og-launch-card--${variant}`}>
+    <div className={`og-launch-card og-launch-card--${variant}${exportMode ? " og-launch-card--export" : ""}`}>
       <div className="og-launch-noise" />
       <div className="og-launch-grid" />
       <div className="og-launch-blob og-launch-blob-a" />
@@ -105,65 +124,30 @@ export default function SocialLaunchCard({ variant = "primary" }) {
       <div className="og-launch-layout">
         <div className="og-launch-copy">
           <div className="og-launch-kicker">solrudd.co.uk // launch</div>
-          <h1 className="og-launch-headline">
-            <span>Sol Rudd</span>
-            <span>Websites, products &amp; AI systems</span>
-          </h1>
-          <p className="og-launch-support">
-            Founder-led frontend systems, automation, digital products, and technical delivery.
-          </p>
+
+          <div className="og-launch-copy-main">
+            <h1 className="og-launch-headline">
+              <span>Sol Rudd</span>
+              <span>Websites, products &amp; AI systems</span>
+            </h1>
+            <p className="og-launch-support">
+              Founder-led frontend systems, automation, digital products, and technical delivery.
+            </p>
+          </div>
 
           <div className="og-launch-tags">
             <span>Founder-led</span>
-            <span>Frontend systems</span>
-            <span>Technical delivery</span>
+            <span>Websites</span>
+            <span>Products</span>
+            <span>AI workflows</span>
           </div>
+
+          {isMinimal ? <MinimalProofStrip /> : null}
         </div>
 
         <div className="og-launch-visual">
-          <BrowserPanel />
-
-          <div className={`og-support-grid${isMinimal ? " og-support-grid-minimal" : ""}`}>
-            <SupportPanel label="// Selected Work" title="Products, websites, and live systems">
-              <div className="og-support-list">
-                {WORK_ITEMS.slice(0, isMinimal ? 3 : 4).map(({ name, label, icon }) => {
-                  const WorkIcon = icon;
-
-                  return (
-                    <div className="og-support-item" key={name}>
-                      <span className="og-support-item-icon">
-                        <WorkIcon size={12} />
-                      </span>
-                      <span className="og-support-item-name">{name}</span>
-                      <span className="og-support-item-label">{label}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </SupportPanel>
-
-            <SupportPanel label="// Operator Stack" title="Frontend, product, and automation">
-              <div className="og-support-chip-row">
-                {STACK_ITEMS.map((item) => (
-                  <span className="og-support-chip" key={item}>
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </SupportPanel>
-
-            {!isMinimal ? (
-              <SupportPanel label="// Signal" title="Built for real launch posts, not screenshots">
-                <div className="og-support-note-list">
-                  {SIGNAL_ITEMS.map((item) => (
-                    <div className="og-support-note" key={item}>
-                      {item}
-                    </div>
-                  ))}
-                </div>
-              </SupportPanel>
-            ) : null}
-          </div>
+          <BrowserPanel minimal={isMinimal} exportMode={exportMode} />
+          {!isMinimal ? <PrimarySupportPanels /> : null}
         </div>
       </div>
     </div>

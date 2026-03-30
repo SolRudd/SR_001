@@ -120,13 +120,31 @@ const TERM_LINES = [
 export default function SolRuddLanding() {
   const pageRef = useRef(null);
   const glowRef = useRef(null);
+  const isOgHomepageSurface =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("surface") === "og-homepage";
 
   usePageMetadata({
     title: buildPageTitle(),
     description: DEFAULT_DESCRIPTION,
     pathname: "/",
+    robots: isOgHomepageSurface ? "noindex, nofollow" : undefined,
     schema: getBaseSchema(),
   });
+
+  useEffect(() => {
+    if (!isOgHomepageSurface) {
+      return undefined;
+    }
+
+    document.documentElement.classList.add("og-homepage-html");
+    document.body.classList.add("og-homepage-body");
+
+    return () => {
+      document.documentElement.classList.remove("og-homepage-html");
+      document.body.classList.remove("og-homepage-body");
+    };
+  }, [isOgHomepageSurface]);
 
   useEffect(() => {
     const pageElement = pageRef.current;
@@ -137,7 +155,8 @@ export default function SolRuddLanding() {
     }
 
     const revealElements = pageElement.querySelectorAll(".reveal:not(.revealed)");
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion =
+      isOgHomepageSurface || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const supportsPointerEffects =
       window.matchMedia("(pointer: fine)").matches && !prefersReducedMotion;
 
@@ -205,10 +224,10 @@ export default function SolRuddLanding() {
 
       io?.disconnect();
     };
-  }, []);
+  }, [isOgHomepageSurface]);
 
   return (
-    <div ref={pageRef}>
+    <div ref={pageRef} className={isOgHomepageSurface ? "og-homepage-surface" : undefined}>
       <div className="noise" />
       <div className="bg-grid" />
       <div className="cursor-glow" ref={glowRef} />

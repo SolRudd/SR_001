@@ -9,7 +9,9 @@ import { getPostBySlug } from "./content/posts";
 import { resolveRoute } from "./lib/routes";
 
 export default function App() {
+  const searchParams = new URLSearchParams(window.location.search);
   const route = resolveRoute(window.location.pathname);
+  const isOgHomepageSurface = searchParams.get("surface") === "og-homepage";
 
   let page = <NotFound />;
 
@@ -22,12 +24,17 @@ export default function App() {
     page = post ? <JournalArticle post={post} /> : <NotFound />;
   } else if (route.type === "social-launch-card") {
     page = <SocialLaunchCardPreview />;
+  } else if (route.type === "social-launch-card-final") {
+    page = <SocialLaunchCardPreview forceExport />;
   } else if (route.type === "social-launch-card-minimal") {
     page = <SocialLaunchCardPreview variant="minimal" />;
   }
 
   const shouldRenderGlobalChrome =
-    route.type !== "social-launch-card" && route.type !== "social-launch-card-minimal";
+    route.type !== "social-launch-card" &&
+    route.type !== "social-launch-card-final" &&
+    route.type !== "social-launch-card-minimal" &&
+    !isOgHomepageSurface;
 
   return (
     <>

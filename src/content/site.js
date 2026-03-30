@@ -10,7 +10,7 @@ export const BOOKING_URL =
   "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ26ETV8foYBbzOp40NX__sRfQBK5X_ZgyU1z0_3-huYwBzn0PPxMV0KrU5vV1_dLzSpyrUIag3E";
 export const DEFAULT_DESCRIPTION =
   "Founder-led websites, AI products, and agentic systems by Sol Rudd. Premium frontend builds, automation, and technical infrastructure for sharp operators.";
-export const DEFAULT_OG_IMAGE = "/og/sol-rudd-og.png";
+export const DEFAULT_OG_IMAGE = "/og/sol-rudd-launch-card.png";
 export const DEFAULT_OG_IMAGE_ALT =
   "Sol Rudd launch card for websites, AI products, and agentic systems.";
 
