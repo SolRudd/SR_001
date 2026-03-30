@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {
@@ -78,22 +78,88 @@ const CONTACT_ITEMS = [
   { label: "AI workflows + automation" },
 ];
 
-const OPERATOR_STACK = [
-  "React",
-  "Node.js",
-  "TypeScript",
-  "Supabase",
-  "WordPress",
-  "Astro",
-  "GitHub",
-  "Vercel",
-  "Docker",
-  "OpenAI",
-  "Claude",
-  "Gemini",
-  "n8n",
-  "Stripe",
-  "Cloudflare",
+const REVIEWS = [
+  {
+    name: "Steve Robertson",
+    quote:
+      "It's been a great experience working with Sol. Everything we've thrown at him he's tackled without any issues. Very prompt and reliable.",
+  },
+  {
+    name: "Rayyan Karim",
+    quote:
+      "Professional, slick, sales and conversion driven websites with some really smart marketing tactics we hadn't considered.",
+  },
+  {
+    name: "Greg Allen",
+    quote:
+      "We used Sol to make a website and his service was brilliant. He explained everything well and put so much effort in.",
+  },
+  {
+    name: "Jack Paradise",
+    quote:
+      "Great customer service and a real pleasure to work with Sol. Always there to help and thorough from start to finish.",
+  },
+];
+
+const STACK_LANES = [
+  {
+    id: "frontend",
+    label: "Frontend",
+    title: "Interfaces, design systems, and frontend delivery.",
+    copy: "The app-layer stack I reach for when speed, clarity, and production finish need to hold up.",
+    items: [
+      { name: "React", detail: "UI runtime" },
+      { name: "Next.js", detail: "App layer" },
+      { name: "TypeScript", detail: "Typed systems" },
+      { name: "Tailwind", detail: "Utility styling" },
+      { name: "Astro", detail: "Content builds" },
+    ],
+  },
+  {
+    id: "backend",
+    label: "Backend / Infra",
+    title: "Runtime, data, hosting, and edge infrastructure.",
+    copy: "The backend and infra lane for APIs, data, deployment, and the systems that keep delivery reliable.",
+    items: [
+      { name: "Node.js", detail: "Server logic" },
+      { name: "Supabase", detail: "Data + auth" },
+      { name: "Docker", detail: "Containerised envs" },
+      { name: "Cloudflare", detail: "Edge + DNS" },
+    ],
+  },
+  {
+    id: "ai",
+    label: "AI / Models",
+    title: "Model tooling for products, agents, and workflow logic.",
+    copy: "The model layer behind prompt systems, automation logic, and agentic build experiments.",
+    items: [
+      { name: "OpenAI", detail: "APIs + agents" },
+      { name: "Anthropic", detail: "Claude models" },
+      { name: "Gemini", detail: "Multimodal runs" },
+      { name: "Codex", detail: "Agentic coding" },
+    ],
+  },
+  {
+    id: "automation",
+    label: "Automation",
+    title: "Workflow orchestration and operator-side automation.",
+    copy: "The tooling layer for workflow handoffs, event logic, and lean operational systems.",
+    items: [
+      { name: "n8n", detail: "Workflow orchestration" },
+      { name: "Stripe", detail: "Billing + events" },
+    ],
+  },
+  {
+    id: "delivery",
+    label: "Delivery / Ops",
+    title: "Release flow, CMS handoff, and day-to-day delivery ops.",
+    copy: "The practical tooling around repos, deploy flow, and handoff for sites that need to stay usable.",
+    items: [
+      { name: "GitHub", detail: "Repos + CI" },
+      { name: "Vercel", detail: "Preview deploys" },
+      { name: "WordPress", detail: "CMS delivery" },
+    ],
+  },
 ];
 
 const MARQUEE_ITEMS = [
@@ -116,6 +182,77 @@ const TERM_LINES = [
   { sym: "→", cls: "term-cyan",   text: "Public experiments — coming" },
   { sym: "→", cls: "term-cyan",   text: "Systems tutorials — queued" },
 ];
+
+function OperatorStackSection() {
+  const [activeStackLane, setActiveStackLane] = useState(STACK_LANES[0].id);
+  const currentStackLane =
+    STACK_LANES.find((lane) => lane.id === activeStackLane) ?? STACK_LANES[0];
+
+  return (
+    <section className="stack-sec defer-section" aria-labelledby="operator-stack-title">
+      <div className="wrap">
+        <div className="stack-shell reveal">
+          <div className="stack-layout">
+            <div className="stack-head">
+              <div className="eyebrow"><IconCode /> Stack Rail</div>
+              <h2 className="stack-title" id="operator-stack-title">OPERATOR STACK</h2>
+              <p className="stack-copy">
+                Curated by delivery lane so the stack reads like an actual system, not a flat tool dump.
+              </p>
+            </div>
+
+            <div className="stack-panel">
+              <div className="stack-tabs" role="tablist" aria-label="Operator stack lanes">
+                {STACK_LANES.map((lane) => {
+                  const isActive = lane.id === currentStackLane.id;
+
+                  return (
+                    <button
+                      key={lane.id}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      className={`stack-tab${isActive ? " stack-tab--active" : ""}`}
+                      onClick={() => setActiveStackLane(lane.id)}
+                    >
+                      {lane.label}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="stack-panel-head">
+                <div className="stack-panel-copy">
+                  <div className="stack-panel-label">// {currentStackLane.label}</div>
+                  <h3 className="stack-panel-title">{currentStackLane.title}</h3>
+                  <p className="stack-panel-body">{currentStackLane.copy}</p>
+                </div>
+
+                <div className="stack-panel-count" aria-label={`${currentStackLane.items.length} tools in ${currentStackLane.label}`}>
+                  <span className="stack-panel-count-label">Tools</span>
+                  <strong>{String(currentStackLane.items.length).padStart(2, "0")}</strong>
+                </div>
+              </div>
+
+              <div className="stack-grid" role="list" aria-label={`${currentStackLane.label} stack`}>
+                {currentStackLane.items.map(({ name, detail }, index) => (
+                  <div className="stack-item" key={name} role="listitem">
+                    <span className="stack-item-mark" aria-hidden="true" />
+                    <div className="stack-item-copy">
+                      <span className="stack-item-label">{name}</span>
+                      <span className="stack-item-detail">{detail}</span>
+                    </div>
+                    <span className="stack-item-num">{String(index + 1).padStart(2, "0")}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function SolRuddLanding() {
   const pageRef = useRef(null);
@@ -323,31 +460,7 @@ export default function SolRuddLanding() {
         </div>
       </section>
 
-      <section className="stack-sec defer-section" aria-labelledby="operator-stack-title">
-        <div className="wrap">
-          <div className="stack-shell reveal">
-            <div className="stack-layout">
-              <div className="stack-head">
-                <div className="eyebrow"><IconCode /> Stack Rail</div>
-                <h2 className="stack-title" id="operator-stack-title">OPERATOR STACK</h2>
-                <p className="stack-copy">
-                  Core tooling across frontend builds, infrastructure, automation, and AI delivery.
-                </p>
-              </div>
-
-              <div className="stack-grid" role="list" aria-label="Operator stack">
-                {OPERATOR_STACK.map((item, index) => (
-                  <div className="stack-item" key={item} role="listitem">
-                    <span className="stack-item-mark" aria-hidden="true" />
-                    <span className="stack-item-label">{item}</span>
-                    <span className="stack-item-num">{String(index + 1).padStart(2, "0")}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <OperatorStackSection />
 
       <div className="hr" />
 
@@ -388,6 +501,56 @@ export default function SolRuddLanding() {
                   <div className="proj-num">{num}</div>
                 </div>
               </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <div className="hr" />
+
+      {/* ── PROOF ── */}
+      <section id="proof" className="sec defer-section">
+        <div className="wrap">
+          <div className="proof-top reveal">
+            <div className="proof-copy">
+              <div className="eyebrow"><IconShield /> Client Proof</div>
+              <h2 className="h2">Clear feedback from real client work.</h2>
+              <p className="body">
+                Selected excerpts from recent 5-star client reviews. Sharp feedback from
+                businesses I have built for, shipped with, and supported through delivery.
+              </p>
+            </div>
+
+            <div className="proof-signal">
+              <div className="proof-signal-label">// Review Signal</div>
+              <div className="proof-signal-score">5.0 / 5</div>
+              <div className="proof-stars" aria-hidden="true">
+                <span>★</span>
+                <span>★</span>
+                <span>★</span>
+                <span>★</span>
+                <span>★</span>
+              </div>
+              <div className="proof-signal-note">Selected from recent live client reviews.</div>
+            </div>
+          </div>
+
+          <div className="proof-grid">
+            {REVIEWS.map(({ name, quote }) => (
+              <article className="proof-card reveal" key={name}>
+                <div className="proof-card-top">
+                  <div className="proof-card-stars" aria-hidden="true">
+                    <span>★</span>
+                    <span>★</span>
+                    <span>★</span>
+                    <span>★</span>
+                    <span>★</span>
+                  </div>
+                  <div className="proof-card-label">Client review</div>
+                </div>
+                <p className="proof-quote">{quote}</p>
+                <div className="proof-name">{name}</div>
+              </article>
             ))}
           </div>
         </div>

@@ -98,6 +98,7 @@ export default function Header() {
               className="hdr-logo-mark"
               width="250"
               height="59"
+              decoding="async"
             />
           </a>
 

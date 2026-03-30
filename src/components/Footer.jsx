@@ -35,6 +35,8 @@ export default function Footer() {
                 className="ftr-logo-mark"
                 width="250"
                 height="59"
+                loading="lazy"
+                decoding="async"
               />
             </a>
             <p className="ftr-tagline">
