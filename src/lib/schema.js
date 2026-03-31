@@ -67,11 +67,35 @@ export function getJournalArticleSchema(post) {
     headline: post.title,
     description: post.description,
     datePublished: post.publishedAt,
+    inLanguage: "en-GB",
     author: { "@id": PERSON_ID },
     publisher: { "@id": PERSON_ID },
     image: buildAbsoluteUrl(DEFAULT_OG_IMAGE),
     articleSection: post.category,
     keywords: post.tags,
     isPartOf: { "@id": JOURNAL_ID },
+  };
+}
+
+export function getJournalFaqSchema(post) {
+  if (!post?.faq?.length) {
+    return null;
+  }
+
+  const articleUrl = buildAbsoluteUrl(buildJournalPostPath(post.slug));
+
+  return {
+    "@type": "FAQPage",
+    "@id": `${articleUrl}#faq`,
+    url: articleUrl,
+    isPartOf: { "@id": JOURNAL_ID },
+    mainEntity: post.faq.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
   };
 }

@@ -3,6 +3,7 @@ import {
   DEFAULT_DESCRIPTION,
   DEFAULT_OG_IMAGE,
   DEFAULT_OG_IMAGE_ALT,
+  SITE_NAME,
   SITE_TITLE,
   buildAbsoluteUrl,
 } from "../content/site";
@@ -115,11 +116,13 @@ export function usePageMetadata({
     setMetaTag("robots", robots);
     setOrRemoveMetaTag("keywords", Array.isArray(keywords) && keywords.length ? keywords.join(", ") : null);
     setPropertyTag("og:type", type);
+    setPropertyTag("og:site_name", SITE_NAME);
     setPropertyTag("og:url", canonical);
     setPropertyTag("og:title", title);
     setPropertyTag("og:description", description);
     setPropertyTag("og:image", image);
     setPropertyTag("og:image:alt", imageAlt);
+    setMetaTag("twitter:card", "summary_large_image");
     setMetaTag("twitter:title", title);
     setMetaTag("twitter:description", description);
     setMetaTag("twitter:image", image);

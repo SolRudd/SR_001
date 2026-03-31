@@ -3,7 +3,12 @@ import { IconArrow, IconRadar, IconTerm } from "../components/Icons";
 import { formatPostDate, getRelatedPosts } from "../content/posts";
 import { buildPageTitle } from "../content/site";
 import { usePageMetadata } from "../lib/metadata";
-import { getBaseSchema, getJournalArticleSchema, getJournalSchema } from "../lib/schema";
+import {
+  getBaseSchema,
+  getJournalArticleSchema,
+  getJournalFaqSchema,
+  getJournalSchema,
+} from "../lib/schema";
 import {
   JOURNAL_INDEX_PATH,
   buildHomeSectionPath,
@@ -70,6 +75,12 @@ function renderBlock(block) {
 
 export default function JournalArticle({ post }) {
   const relatedPosts = getRelatedPosts(post);
+  const pageSchema = [...getBaseSchema(), getJournalSchema(), getJournalArticleSchema(post)];
+  const faqSchema = getJournalFaqSchema(post);
+
+  if (faqSchema) {
+    pageSchema.push(faqSchema);
+  }
 
   usePageMetadata({
     title: buildPageTitle(post.title),
@@ -79,7 +90,7 @@ export default function JournalArticle({ post }) {
     publishedAt: post.publishedAt,
     section: post.category,
     keywords: post.tags,
-    schema: [...getBaseSchema(), getJournalSchema(), getJournalArticleSchema(post)],
+    schema: pageSchema,
   });
 
   return (

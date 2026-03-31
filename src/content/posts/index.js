@@ -1,4 +1,5 @@
 import buzzboostFounderSiteLog from "./buzzboost-founder-site-log";
+import codexOpenclawAndRealAgenticWorkflows from "./codex-openclaw-and-real-agentic-workflows";
 import fromDesignReferenceToProductionReact from "./from-design-reference-to-production-react";
 import greentracerSignalProduct from "./greentracer-signal-product";
 import whatActuallyMakesModernDigitalDeliveryWork from "./what-actually-makes-modern-digital-delivery-work";
@@ -11,6 +12,7 @@ const POST_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
 });
 
 const POSTS = [
+  codexOpenclawAndRealAgenticWorkflows,
   whatActuallyMakesModernDigitalDeliveryWork,
   whyGoodDigitalWorkUsuallyComesFromSpecialistTeams,
   buzzboostFounderSiteLog,
