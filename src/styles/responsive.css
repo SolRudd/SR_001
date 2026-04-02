@@ -1,0 +1,224 @@
+/* ── responsive ── */
+@media (max-width: 1000px) {
+  .journal-hero-grid,
+  .journal-archive-grid,
+  .article-grid { grid-template-columns: 1fr; }
+  .article-more-grid { grid-template-columns: 1fr; }
+  .journal-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .journal-row-side { align-items: flex-start; }
+  .journal-chip-row-compact { justify-content: flex-start; }
+  .stack-layout  { grid-template-columns: 1fr; }
+  .stack-head    { border-right: none; border-bottom: 1px solid var(--b0); }
+  .stack-grid    { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .proof-top     { grid-template-columns: 1fr; }
+  .hero-grid    { grid-template-columns: 1fr; }
+  .hud-stack    { display: none; }
+  .proj-grid    { grid-template-columns: 1fr 1fr; }
+  .proof-grid   { grid-template-columns: 1fr; }
+  .caps-layout  { grid-template-columns: 1fr; gap: 52px; }
+  .signal-layout { grid-template-columns: 1fr; gap: 48px; }
+  .contact-inner { grid-template-columns: 1fr; }
+  .contact-l    { border-right: none; border-bottom: 1px solid var(--b0); padding: 44px 36px; }
+  .contact-r    { padding: 44px 36px; }
+}
+@media (max-width: 640px) {
+  .journal-hero,
+  .article-hero { padding: 110px 0 56px; }
+  .journal-hero-copy { padding-top: 16px; }
+  .journal-title,
+  .article-title {
+    font-size: 32px;
+    letter-spacing: -1.5px;
+  }
+  .journal-feature,
+  .journal-side-panel,
+  .article-hero-shell,
+  .article-more-shell { padding: 24px 20px; }
+  .journal-row { padding: 22px 20px; }
+  .article-intro { font-size: 17px; line-height: 1.8; }
+  .article-prose h2 { font-size: 24px; }
+  .article-prose h3 { font-size: 20px; }
+  .article-prose p,
+  .article-prose li { font-size: 15px; line-height: 1.85; }
+  .article-prose pre { padding: 18px; }
+  .consent-shell { left: 12px; right: 12px; bottom: 12px; }
+  .consent-banner { max-height: calc(100vh - 24px); overflow-y: auto; }
+  .consent-main,
+  .consent-manage { padding: 16px; }
+  .consent-main { grid-template-columns: 1fr; }
+  .consent-actions,
+  .consent-manage-actions { justify-content: flex-start; }
+  .consent-row { grid-template-columns: 1fr; }
+  .stack-sec     { padding: 0 0 56px; }
+  .stack-head    { padding: 24px 20px; }
+  .stack-tabs    { gap: 5px; padding: 14px 16px 12px; }
+  .stack-tab     { min-height: 29px; padding: 7px 10px; }
+  .stack-panel-head { grid-template-columns: 1fr; gap: 16px; padding: 18px 16px 16px; }
+  .stack-panel-title { font-size: 20px; letter-spacing: -0.8px; }
+  .stack-panel-body { font-size: 12px; line-height: 1.7; }
+  .stack-panel-count { align-items: flex-start; min-width: 0; gap: 3px; }
+  .stack-panel-count strong { font-size: 19px; }
+  .stack-grid    { grid-template-columns: 1fr; }
+  .stack-item    { min-height: 0; padding: 13px 15px; }
+  .stack-item-label { font-size: 10px; }
+  .stack-item-detail { font-size: 12px; line-height: 1.6; }
+  .proof-signal  { padding: 22px 20px; }
+  .proof-card    { min-height: 0; padding: 24px 20px; }
+  .proof-quote   { font-size: 14px; line-height: 1.8; }
+  .wrap         { padding: 0 20px; }
+  .proj-grid    { grid-template-columns: 1fr; }
+  .caps-grid    { grid-template-columns: 1fr; }
+  .hero         { padding: 92px 0 80px; }
+  .badge        { margin-bottom: 28px; font-size: 10px; letter-spacing: .24em; }
+  .sec          { padding: 72px 0; }
+  .h1           { font-size: 34px; letter-spacing: -1.5px; }
+  .h2           { font-size: 26px; letter-spacing: -1px; }
+  .contact-email-link { font-size: 9px; letter-spacing: .16em; }
+  .contact-l, .contact-r { padding: 36px 24px; }
+  .caps-meta    { gap: 24px; }
+  .signal-layout { grid-template-columns: 1fr; }
+  .marquee-band { display: none; }
+  .hero-bg-text { display: none; }
+}
+
+@media (hover: none), (pointer: coarse) {
+  body::before,
+  .noise,
+  .cursor-glow {
+    display: none;
+  }
+
+  .bg-grid::before,
+  .blob-1,
+  .blob-2,
+  .blob-3 {
+    animation: none !important;
+  }
+
+  .h1 .c,
+  .h1 .c::before,
+  .h1 .c::after,
+  .dot::before,
+  .cursor,
+  .hud-scan,
+  .c-dot,
+  .hdr-logo-dot::before,
+  .ftr-logo-dot::before,
+  .ftr-avail-dot,
+  .term-blink .term-cyan {
+    animation: none !important;
+  }
+
+  .hdr--scrolled,
+  .mob-menu,
+  .consent-banner {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .bg-grid,
+  .bg-grid::before,
+  .blob-1,
+  .blob-2,
+  .blob-3,
+  .h1 .c,
+  .h1 .c::before,
+  .h1 .c::after,
+  .cursor,
+  .hud-scan,
+  .c-dot,
+  .mob-dot,
+  .ftr-avail-dot,
+  .hdr-logo-dot::before,
+  .ftr-logo-dot::before,
+  .dot::before,
+  .term-blink .term-cyan {
+    animation: none !important;
+  }
+  .reveal,
+  .proj,
+  .proj::before,
+  .proj-link,
+  .hdr,
+  .hdr-link,
+  .hdr-link::after,
+  .hdr-link-arrow,
+  .hdr-cta,
+  .hdr-burger span,
+  .mob-link,
+  .mob-link-arr,
+  .cap,
+  .cap::before,
+  .c-item,
+  .cursor-glow,
+  .consent-btn,
+  .consent-toggle-thumb,
+  .article-text-link,
+  .journal-ref-link {
+    transition: none !important;
+  }
+}
+
+.og-homepage-surface .noise,
+.og-homepage-surface .cursor-glow {
+  display: none;
+}
+
+.og-homepage-surface .bg-grid::before,
+.og-homepage-surface .blob-1,
+.og-homepage-surface .blob-2,
+.og-homepage-surface .blob-3,
+.og-homepage-surface .marquee-track,
+.og-homepage-surface .h1 .c,
+.og-homepage-surface .h1 .c::before,
+.og-homepage-surface .h1 .c::after,
+.og-homepage-surface .dot::before,
+.og-homepage-surface .cursor,
+.og-homepage-surface .hud-scan,
+.og-homepage-surface .c-dot,
+.og-homepage-surface .mob-dot,
+.og-homepage-surface .ftr-avail-dot,
+.og-homepage-surface .hdr-logo-dot::before,
+.og-homepage-surface .ftr-logo-dot::before,
+.og-homepage-surface .term-blink .term-cyan {
+  animation: none !important;
+}
+
+.og-homepage-surface .reveal,
+.og-homepage-surface .proj,
+.og-homepage-surface .proj::before,
+.og-homepage-surface .proj-link,
+.og-homepage-surface .hdr,
+.og-homepage-surface .hdr-link,
+.og-homepage-surface .hdr-link::after,
+.og-homepage-surface .hdr-link-arrow,
+.og-homepage-surface .hdr-cta,
+.og-homepage-surface .hdr-burger span,
+.og-homepage-surface .mob-link,
+.og-homepage-surface .mob-link-arr,
+.og-homepage-surface .cap,
+.og-homepage-surface .cap::before,
+.og-homepage-surface .c-item {
+  transition: none !important;
+}
+
+html.og-homepage-html,
+body.og-homepage-body {
+  overflow: hidden;
+}
+
+html.og-homepage-html {
+  scrollbar-width: none;
+}
+
+html.og-homepage-html::-webkit-scrollbar,
+body.og-homepage-body::-webkit-scrollbar {
+  display: none;
+}
+

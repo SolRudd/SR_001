@@ -1,0 +1,45 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #030306;
+  --s1:      #07070f;
+  --s2:      #0b0b18;
+  --s3:      #0f0f22;
+  --b0:      rgba(255,255,255,0.04);
+  --b1:      rgba(255,255,255,0.08);
+  --b2:      rgba(255,255,255,0.13);
+  --cyan:    #00d4ff;
+  --cg:      rgba(0,212,255,0.06);
+  --magenta: #ff00ff;
+  --green:   #00ff88;
+  --amber:   #ffcc00;
+  --purple:  #a855f7;
+  --tp:      #f0f0f8;
+  --ts:      #7a8699;
+  --tm:      #2e3d50;
+  --mono:    'Share Tech Mono', monospace;
+  --display: 'Unbounded', sans-serif;
+  --sans:    'DM Sans', sans-serif;
+  --mx:      50vw;
+  --my:      50vh;
+}
+
+.home-page {
+  --bg:      #020611;
+  --s1:      #07111f;
+  --s2:      #0b1627;
+  --s3:      #0f1b2f;
+  --b0:      rgba(77,163,255,0.08);
+  --b1:      rgba(77,163,255,0.12);
+  --b2:      rgba(77,163,255,0.2);
+  --cyan:    #00d1ff;
+  --blue:    #4da3ff;
+  --cg:      rgba(0,209,255,0.045);
+  --tp:      #f3f7fb;
+  --ts:      #7e8ca3;
+  --tm:      #5d6c82;
+  min-height: 100vh;
+  position: relative;
+  background: var(--bg);
+  color: var(--tp);
+}
