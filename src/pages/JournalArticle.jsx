@@ -83,8 +83,8 @@ export default function JournalArticle({ post }) {
   }
 
   usePageMetadata({
-    title: buildPageTitle(post.title),
-    description: post.description,
+    title: buildPageTitle(post.metaTitle ?? post.title),
+    description: post.metaDescription ?? post.description,
     pathname: buildJournalPostPath(post.slug),
     type: "article",
     publishedAt: post.publishedAt,

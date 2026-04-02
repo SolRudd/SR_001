@@ -367,7 +367,10 @@ export default function SolRuddLanding() {
   }, [isOgHomepageSurface]);
 
   return (
-    <div ref={pageRef} className={isOgHomepageSurface ? "og-homepage-surface" : undefined}>
+    <div
+      ref={pageRef}
+      className={`home-page${isOgHomepageSurface ? " og-homepage-surface" : ""}`}
+    >
       <div className="noise" />
       <div className="bg-grid" />
       <div className="cursor-glow" ref={glowRef} />
