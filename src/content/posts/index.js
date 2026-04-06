@@ -4,6 +4,7 @@ import codexTerminalAiWorkflows2026 from "./codex-terminal-ai-workflows-2026";
 import fromDesignReferenceToProductionReact from "./from-design-reference-to-production-react";
 import greentracerSignalProduct from "./greentracer-signal-product";
 import whatActuallyMakesModernDigitalDeliveryWork from "./what-actually-makes-modern-digital-delivery-work";
+import whyAiAgentsNeedGuardrails from "./why-ai-agents-need-guardrails";
 import whyGoodDigitalWorkUsuallyComesFromSpecialistTeams from "./why-good-digital-work-usually-comes-from-specialist-teams";
 
 const POST_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
@@ -13,6 +14,7 @@ const POST_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
 });
 
 const POSTS = [
+  whyAiAgentsNeedGuardrails,
   codexTerminalAiWorkflows2026,
   codexOpenclawAndRealAgenticWorkflows,
   whatActuallyMakesModernDigitalDeliveryWork,
