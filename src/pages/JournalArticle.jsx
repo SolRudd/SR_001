@@ -1,14 +1,8 @@
 import EditorialLayout from "../components/EditorialLayout";
 import { IconArrow, IconRadar, IconTerm } from "../components/Icons";
 import { formatPostDate, getRelatedPosts } from "../content/posts";
-import { buildPageTitle } from "../content/site";
 import { usePageMetadata } from "../lib/metadata";
-import {
-  getBaseSchema,
-  getJournalArticleSchema,
-  getJournalFaqSchema,
-  getJournalSchema,
-} from "../lib/schema";
+import { getJournalArticleMetadata } from "../lib/pageMetadata";
 import {
   JOURNAL_INDEX_PATH,
   buildHomeSectionPath,
@@ -75,23 +69,7 @@ function renderBlock(block) {
 
 export default function JournalArticle({ post }) {
   const relatedPosts = getRelatedPosts(post);
-  const pageSchema = [...getBaseSchema(), getJournalSchema(), getJournalArticleSchema(post)];
-  const faqSchema = getJournalFaqSchema(post);
-
-  if (faqSchema) {
-    pageSchema.push(faqSchema);
-  }
-
-  usePageMetadata({
-    title: buildPageTitle(post.metaTitle ?? post.title),
-    description: post.metaDescription ?? post.description,
-    pathname: buildJournalPostPath(post.slug),
-    type: "article",
-    publishedAt: post.publishedAt,
-    section: post.category,
-    keywords: post.tags,
-    schema: pageSchema,
-  });
+  usePageMetadata(getJournalArticleMetadata(post));
 
   return (
     <EditorialLayout mainClassName="journal-page">

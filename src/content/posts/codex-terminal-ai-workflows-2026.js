@@ -2,7 +2,7 @@ import {
   JOURNAL_INDEX_PATH,
   buildHomeSectionPath,
   buildJournalPostPath,
-} from "../../lib/routes";
+} from "../../lib/routes.js";
 
 const OPENAI_CODEX_APP_URL = "https://openai.com/index/introducing-the-codex-app/";
 const OPENAI_CODEX_CLI_URL =

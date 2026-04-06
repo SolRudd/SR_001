@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { buildPageTitle, DEFAULT_DESCRIPTION } from "../content/site";
 import CapabilitiesSection from "../components/home/CapabilitiesSection";
 import ContactSection from "../components/home/ContactSection";
 import HeroSection from "../components/home/HeroSection";
@@ -11,7 +10,7 @@ import useHomepageSurfaceEffects from "../components/home/useHomepageSurfaceEffe
 import WorkSection from "../components/home/WorkSection";
 import SiteShell from "../components/site/SiteShell";
 import { usePageMetadata } from "../lib/metadata";
-import { getBaseSchema } from "../lib/schema";
+import { getHomePageMetadata } from "../lib/pageMetadata";
 
 export default function SolRuddLanding() {
   const pageRef = useRef(null);
@@ -20,13 +19,11 @@ export default function SolRuddLanding() {
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("surface") === "og-homepage";
 
-  usePageMetadata({
-    title: buildPageTitle(),
-    description: DEFAULT_DESCRIPTION,
-    pathname: "/",
-    robots: isOgHomepageSurface ? "noindex, nofollow" : undefined,
-    schema: getBaseSchema(),
-  });
+  usePageMetadata(
+    getHomePageMetadata({
+      robots: isOgHomepageSurface ? "noindex, nofollow" : undefined,
+    })
+  );
 
   useHomepageSurfaceEffects(pageRef, glowRef, isOgHomepageSurface);
 

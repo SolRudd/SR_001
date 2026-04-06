@@ -1,4 +1,4 @@
-import { buildHomeSectionPath, buildJournalPostPath } from "../../lib/routes";
+import { buildHomeSectionPath, buildJournalPostPath } from "../../lib/routes.js";
 
 const SEO_PARADISE_URL = "https://seoparadise.co.uk/";
 const SPACE_ROCKET_DIGITAL_URL = "https://spacerocketdigital.com/";

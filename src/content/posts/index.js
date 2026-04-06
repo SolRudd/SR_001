@@ -1,11 +1,12 @@
-import buzzboostFounderSiteLog from "./buzzboost-founder-site-log";
-import codexOpenclawAndRealAgenticWorkflows from "./codex-openclaw-and-real-agentic-workflows";
-import codexTerminalAiWorkflows2026 from "./codex-terminal-ai-workflows-2026";
-import fromDesignReferenceToProductionReact from "./from-design-reference-to-production-react";
-import greentracerSignalProduct from "./greentracer-signal-product";
-import whatActuallyMakesModernDigitalDeliveryWork from "./what-actually-makes-modern-digital-delivery-work";
-import whyAiAgentsNeedGuardrails from "./why-ai-agents-need-guardrails";
-import whyGoodDigitalWorkUsuallyComesFromSpecialistTeams from "./why-good-digital-work-usually-comes-from-specialist-teams";
+import buzzboostFounderSiteLog from "./buzzboost-founder-site-log.js";
+import codexOpenclawAndRealAgenticWorkflows from "./codex-openclaw-and-real-agentic-workflows.js";
+import codexTerminalAiWorkflows2026 from "./codex-terminal-ai-workflows-2026.js";
+import fromDesignReferenceToProductionReact from "./from-design-reference-to-production-react.js";
+import greentracerSignalProduct from "./greentracer-signal-product.js";
+import whatActuallyMakesModernDigitalDeliveryWork from "./what-actually-makes-modern-digital-delivery-work.js";
+import whyAiAgentsNeedGuardrails from "./why-ai-agents-need-guardrails.js";
+import whyImTestingLocalAiAgents from "./why-im-testing-local-ai-agents.js";
+import whyGoodDigitalWorkUsuallyComesFromSpecialistTeams from "./why-good-digital-work-usually-comes-from-specialist-teams.js";
 
 const POST_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
   day: "2-digit",
@@ -14,6 +15,7 @@ const POST_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
 });
 
 const POSTS = [
+  whyImTestingLocalAiAgents,
   whyAiAgentsNeedGuardrails,
   codexTerminalAiWorkflows2026,
   codexOpenclawAndRealAgenticWorkflows,

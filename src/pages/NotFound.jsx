@@ -1,18 +1,11 @@
 import EditorialLayout from "../components/EditorialLayout";
 import { IconArrow, IconRadar } from "../components/Icons";
-import { buildPageTitle } from "../content/site";
 import { usePageMetadata } from "../lib/metadata";
-import { getBaseSchema } from "../lib/schema";
+import { getNotFoundMetadata } from "../lib/pageMetadata";
 import { JOURNAL_INDEX_PATH, HOME_PATH } from "../lib/routes";
 
 export default function NotFound() {
-  usePageMetadata({
-    title: buildPageTitle("Not Found"),
-    description: "The page you requested is not available.",
-    pathname: "/404/",
-    robots: "noindex, nofollow",
-    schema: getBaseSchema(),
-  });
+  usePageMetadata(getNotFoundMetadata());
 
   return (
     <EditorialLayout mainClassName="journal-page">

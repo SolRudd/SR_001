@@ -2,7 +2,7 @@ import {
   JOURNAL_INDEX_PATH,
   buildHomeSectionPath,
   buildJournalPostPath,
-} from "../../lib/routes";
+} from "../../lib/routes.js";
 
 const OPENAI_CODEX_URL = "https://openai.com/index/codex-now-generally-available/";
 const ANTHROPIC_AGENTS_URL = "https://www.anthropic.com/engineering/building-effective-agents";

@@ -1,9 +1,9 @@
-import { LINKEDIN_URL } from "../site";
+import { LINKEDIN_URL } from "../site.js";
 import {
   JOURNAL_INDEX_PATH,
   buildHomeSectionPath,
   buildJournalPostPath,
-} from "../../lib/routes";
+} from "../../lib/routes.js";
 
 const post = {
   slug: "why-ai-agents-need-guardrails",

@@ -1,149 +1,96 @@
 import { useEffect } from "react";
 import {
-  DEFAULT_DESCRIPTION,
-  DEFAULT_OG_IMAGE,
-  DEFAULT_OG_IMAGE_ALT,
-  SITE_NAME,
-  SITE_TITLE,
-  buildAbsoluteUrl,
-} from "../content/site";
+  buildManagedHeadMarkup,
+  buildMetadataPayload,
+} from "./seo.js";
 
-const DEFAULT_ROBOTS =
-  "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+function ensureHeadMarkers() {
+  let startComment = null;
+  let endComment = null;
 
-function ensureMetaAttribute(selector, attributeName, attributeValue) {
-  let element = document.head.querySelector(selector);
+  for (const node of document.head.childNodes) {
+    if (node.nodeType !== Node.COMMENT_NODE) {
+      continue;
+    }
 
-  if (!element) {
-    element = document.createElement("meta");
-    element.setAttribute(attributeName, attributeValue);
-    document.head.appendChild(element);
+    if (node.nodeValue === " SEO:BEGIN ") {
+      startComment = node;
+    }
+
+    if (node.nodeValue === " SEO:END ") {
+      endComment = node;
+    }
   }
 
-  return element;
-}
-
-function ensureLinkAttribute(selector, attributeName, attributeValue) {
-  let element = document.head.querySelector(selector);
-
-  if (!element) {
-    element = document.createElement("link");
-    element.setAttribute(attributeName, attributeValue);
-    document.head.appendChild(element);
+  if (!startComment) {
+    startComment = document.createComment(" SEO:BEGIN ");
+    document.head.appendChild(startComment);
   }
 
-  return element;
-}
-
-function setMetaTag(name, value) {
-  ensureMetaAttribute(`meta[name="${name}"]`, "name", name).setAttribute("content", value);
-}
-
-function setPropertyTag(property, value) {
-  ensureMetaAttribute(`meta[property="${property}"]`, "property", property).setAttribute("content", value);
-}
-
-function setCanonical(href) {
-  ensureLinkAttribute('link[rel="canonical"]', "rel", "canonical").setAttribute("href", href);
-}
-
-function removeHeadElement(selector) {
-  document.head.querySelector(selector)?.remove();
-}
-
-function setOrRemoveMetaTag(name, value) {
-  if (!value) {
-    removeHeadElement(`meta[name="${name}"]`);
-    return;
+  if (!endComment) {
+    endComment = document.createComment(" SEO:END ");
+    document.head.appendChild(endComment);
   }
 
-  setMetaTag(name, value);
+  return { startComment, endComment };
 }
 
-function setOrRemovePropertyTag(property, value) {
-  if (!value) {
-    removeHeadElement(`meta[property="${property}"]`);
-    return;
+function replaceManagedHead(metadata) {
+  const { startComment, endComment } = ensureHeadMarkers();
+  let cursor = startComment.nextSibling;
+
+  while (cursor && cursor !== endComment) {
+    const next = cursor.nextSibling;
+    cursor.remove();
+    cursor = next;
   }
 
-  setPropertyTag(property, value);
-}
-
-function setStructuredData(schema) {
-  const scriptSelector = 'script[data-site-schema="page"]';
-  const hasSchema = Array.isArray(schema) && schema.length > 0;
-
-  if (!hasSchema) {
-    removeHeadElement(scriptSelector);
-    return;
-  }
-
-  let script = document.head.querySelector(scriptSelector);
-
-  if (!script) {
-    script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.setAttribute("data-site-schema", "page");
-    document.head.appendChild(script);
-  }
-
-  script.textContent = JSON.stringify({
-    "@context": "https://schema.org",
-    "@graph": schema,
-  });
+  const template = document.createElement("template");
+  template.innerHTML = buildManagedHeadMarkup(metadata);
+  endComment.before(template.content);
 }
 
 export function usePageMetadata({
-  title = SITE_TITLE,
-  description = DEFAULT_DESCRIPTION,
-  pathname = "/",
-  imagePath = DEFAULT_OG_IMAGE,
-  imageAlt = DEFAULT_OG_IMAGE_ALT,
-  type = "website",
-  robots = DEFAULT_ROBOTS,
+  title,
+  description,
+  pathname,
+  imagePath,
+  imageAlt,
+  fallbackImagePath,
+  fallbackImageAlt,
+  type,
+  robots,
   publishedAt,
   section,
   keywords,
-  schema = [],
+  schema,
+  author,
 } = {}) {
   useEffect(() => {
-    const canonical = buildAbsoluteUrl(pathname);
-    const image = buildAbsoluteUrl(imagePath);
+    const metadata = buildMetadataPayload({
+      title,
+      description,
+      pathname,
+      imagePath,
+      imageAlt,
+      fallbackImagePath,
+      fallbackImageAlt,
+      type,
+      robots,
+      publishedAt,
+      section,
+      keywords,
+      schema,
+      author,
+    });
 
-    document.title = title;
-    setCanonical(canonical);
-    setMetaTag("description", description);
-    setMetaTag("robots", robots);
-    setOrRemoveMetaTag("keywords", Array.isArray(keywords) && keywords.length ? keywords.join(", ") : null);
-    setPropertyTag("og:type", type);
-    setPropertyTag("og:site_name", SITE_NAME);
-    setPropertyTag("og:url", canonical);
-    setPropertyTag("og:title", title);
-    setPropertyTag("og:description", description);
-    setPropertyTag("og:image", image);
-    setPropertyTag("og:image:alt", imageAlt);
-    setMetaTag("twitter:card", "summary_large_image");
-    setMetaTag("twitter:title", title);
-    setMetaTag("twitter:description", description);
-    setMetaTag("twitter:image", image);
-    setMetaTag("twitter:image:alt", imageAlt);
-    setOrRemovePropertyTag("article:section", type === "article" ? section : null);
-
-    const articlePublishedTimeTag = ensureMetaAttribute(
-      'meta[property="article:published_time"]',
-      "property",
-      "article:published_time"
-    );
-
-    if (publishedAt && type === "article") {
-      articlePublishedTimeTag.setAttribute("content", publishedAt);
-    } else {
-      articlePublishedTimeTag.remove();
-    }
-
-    setStructuredData(schema);
+    document.title = metadata.title;
+    replaceManagedHead(metadata);
   }, [
+    author,
     description,
+    fallbackImageAlt,
+    fallbackImagePath,
     imageAlt,
     imagePath,
     keywords,

@@ -1,11 +1,9 @@
 import EditorialLayout from "../components/EditorialLayout";
 import { IconArrow, IconPen, IconRadar, IconTerm } from "../components/Icons";
 import { posts, formatPostDate } from "../content/posts";
-import { buildPageTitle } from "../content/site";
 import { usePageMetadata } from "../lib/metadata";
-import { getBaseSchema, getJournalSchema } from "../lib/schema";
+import { getJournalIndexMetadata } from "../lib/pageMetadata";
 import {
-  JOURNAL_INDEX_PATH,
   buildHomeSectionPath,
   buildJournalPostPath,
 } from "../lib/routes";
@@ -21,14 +19,7 @@ export default function JournalIndex() {
   const [featuredPost, ...archivePosts] = posts;
   const nextReadPost = archivePosts[0] ?? featuredPost;
 
-  usePageMetadata({
-    title: buildPageTitle("Journal"),
-    description:
-      "Founder-led notes on products, execution, frontend systems, AI workflows, and real build decisions from live work.",
-    pathname: JOURNAL_INDEX_PATH,
-    keywords: ["founder notes", "frontend systems", "AI workflows", "product breakdowns"],
-    schema: [...getBaseSchema(), getJournalSchema()],
-  });
+  usePageMetadata(getJournalIndexMetadata());
 
   if (!featuredPost) {
     return (

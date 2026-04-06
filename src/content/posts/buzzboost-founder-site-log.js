@@ -1,4 +1,4 @@
-import { buildHomeSectionPath, buildJournalPostPath } from "../../lib/routes";
+import { buildHomeSectionPath, buildJournalPostPath } from "../../lib/routes.js";
 
 const BUZZBOOST_URL = "https://buzzboost.co.uk/";
 const NNG_INFO_SCENT_URL = "https://www.nngroup.com/articles/information-scent/";

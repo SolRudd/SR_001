@@ -7,8 +7,9 @@ import {
   SITE_URL,
   X_URL,
   buildAbsoluteUrl,
-} from "../content/site";
-import { buildJournalPostPath } from "./routes";
+} from "../content/site.js";
+import { JOURNAL_OG_IMAGE, resolveSocialImage } from "./seo.js";
+import { buildJournalPostPath } from "./routes.js";
 
 const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
@@ -58,6 +59,11 @@ export function getJournalSchema() {
 
 export function getJournalArticleSchema(post) {
   const articleUrl = buildAbsoluteUrl(buildJournalPostPath(post.slug));
+  const socialImage = resolveSocialImage({
+    imagePath: post.ogImage,
+    imageAlt: post.ogImageAlt,
+    fallbackImagePath: post.articleImage ?? JOURNAL_OG_IMAGE,
+  });
 
   return {
     "@type": "BlogPosting",
@@ -70,7 +76,7 @@ export function getJournalArticleSchema(post) {
     inLanguage: "en-GB",
     author: { "@id": PERSON_ID },
     publisher: { "@id": PERSON_ID },
-    image: buildAbsoluteUrl(DEFAULT_OG_IMAGE),
+    image: buildAbsoluteUrl(socialImage.imagePath),
     articleSection: post.category,
     keywords: post.tags,
     isPartOf: { "@id": JOURNAL_ID },

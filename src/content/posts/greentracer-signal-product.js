@@ -1,4 +1,4 @@
-import { buildJournalPostPath } from "../../lib/routes";
+import { buildJournalPostPath } from "../../lib/routes.js";
 
 const GREENTRACER_URL = "https://www.greentracer.org/";
 const SUSTAINABLE_WEB_DESIGN_URL = "https://sustainablewebdesign.org/";

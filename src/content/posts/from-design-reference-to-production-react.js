@@ -1,4 +1,4 @@
-import { buildJournalPostPath } from "../../lib/routes";
+import { buildJournalPostPath } from "../../lib/routes.js";
 
 const JIGMA_URL = "https://jigma.co.uk/";
 const REACT_DOCS_URL = "https://react.dev/";
