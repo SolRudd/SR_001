@@ -11,8 +11,8 @@ import {
 export const DEFAULT_ROBOTS =
   "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 
-export const JOURNAL_OG_IMAGE = "/og/sol-rudd-og.png";
-export const JOURNAL_OG_IMAGE_ALT = "Sol Rudd journal social sharing image.";
+export const JOURNAL_OG_IMAGE = DEFAULT_OG_IMAGE;
+export const JOURNAL_OG_IMAGE_ALT = DEFAULT_OG_IMAGE_ALT;
 
 export const DEFAULT_AUTHOR = "Sol Rudd";
 export const DEFAULT_TWITTER_HANDLE = "@solrudd";
