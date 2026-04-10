@@ -12,7 +12,7 @@ import {
   SOCIAL_LAUNCH_CARD_FINAL_PATH,
   SOCIAL_LAUNCH_CARD_MINIMAL_PATH,
   SOCIAL_LAUNCH_CARD_PATH,
-  buildJournalPostPath,
+  buildPostPath,
 } from "./routes.js";
 import {
   JOURNAL_OG_IMAGE,
@@ -54,7 +54,7 @@ export function getJournalArticleMetadata(post) {
   return buildMetadataPayload({
     title: buildPageTitle(post.metaTitle ?? post.title),
     description: post.metaDescription ?? post.description,
-    pathname: buildJournalPostPath(post.slug),
+    pathname: buildPostPath(post),
     imagePath: post.ogImage,
     imageAlt: post.ogImageAlt,
     fallbackImagePath: post.articleImage ?? JOURNAL_OG_IMAGE,
@@ -64,6 +64,7 @@ export function getJournalArticleMetadata(post) {
     section: post.category,
     keywords: post.tags,
     schema: pageSchema,
+    author: post.authorName,
   });
 }
 
@@ -92,7 +93,7 @@ export function getPrerenderMetadataEntries() {
     { pathname: HOME_PATH, metadata: getHomePageMetadata() },
     { pathname: JOURNAL_INDEX_PATH, metadata: getJournalIndexMetadata() },
     ...posts.map((post) => ({
-      pathname: buildJournalPostPath(post.slug),
+      pathname: buildPostPath(post),
       metadata: getJournalArticleMetadata(post),
     })),
     { pathname: "/404/", metadata: getNotFoundMetadata() },

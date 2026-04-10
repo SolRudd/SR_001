@@ -9,7 +9,7 @@ import {
   buildAbsoluteUrl,
 } from "../content/site.js";
 import { JOURNAL_OG_IMAGE, resolveSocialImage } from "./seo.js";
-import { buildJournalPostPath } from "./routes.js";
+import { buildPostPath } from "./routes.js";
 
 const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
@@ -58,7 +58,7 @@ export function getJournalSchema() {
 }
 
 export function getJournalArticleSchema(post) {
-  const articleUrl = buildAbsoluteUrl(buildJournalPostPath(post.slug));
+  const articleUrl = buildAbsoluteUrl(buildPostPath(post));
   const socialImage = resolveSocialImage({
     imagePath: post.ogImage,
     imageAlt: post.ogImageAlt,
@@ -66,7 +66,7 @@ export function getJournalArticleSchema(post) {
   });
 
   return {
-    "@type": "BlogPosting",
+    "@type": post.schemaType ?? "BlogPosting",
     "@id": `${articleUrl}#article`,
     url: articleUrl,
     mainEntityOfPage: articleUrl,
@@ -88,7 +88,7 @@ export function getJournalFaqSchema(post) {
     return null;
   }
 
-  const articleUrl = buildAbsoluteUrl(buildJournalPostPath(post.slug));
+  const articleUrl = buildAbsoluteUrl(buildPostPath(post));
 
   return {
     "@type": "FAQPage",

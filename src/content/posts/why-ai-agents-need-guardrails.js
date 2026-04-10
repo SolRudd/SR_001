@@ -16,6 +16,9 @@ const post = {
   category: "Agent Systems Note",
   readingTime: "7 min read",
   publishedAt: "2026-04-06",
+  articleImage: "/articles/heroes/ai-agents-need-guardrails-hero.jpg",
+  articleImageAlt:
+    "Futuristic digital pathways with illuminated checkpoints and warning markers representing AI agent guardrails.",
   tags: ["AI agents", "Guardrails", "Oversight", "Operational systems"],
   relatedSlugs: [
     "codex-openclaw-and-real-agentic-workflows",

@@ -20,6 +20,9 @@ const post = {
   category: "Workflow Note",
   readingTime: "9 min read",
   publishedAt: "2026-04-02",
+  articleImage: "/articles/heroes/codex-terminal-ai-workflows-hero.jpg",
+  articleImageAlt:
+    "Large code and analytics panels connected across a terminal-like workflow surface.",
   tags: ["Codex", "AI workflows", "Founder systems"],
   relatedSlugs: [
     "codex-openclaw-and-real-agentic-workflows",

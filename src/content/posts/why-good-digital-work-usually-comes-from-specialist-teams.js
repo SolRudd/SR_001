@@ -16,6 +16,9 @@ const post = {
   category: "Founder Note",
   readingTime: "8 min read",
   publishedAt: "2026-03-30",
+  articleImage: "/articles/heroes/specialist-teams-digital-work-hero.jpg",
+  articleImageAlt:
+    "Interconnected specialist digital platforms feeding into a shared central system.",
   tags: ["Delivery systems", "Specialist partners", "Operator thinking"],
   relatedSlugs: [
     "shipping-buzzboost-without-bloat",

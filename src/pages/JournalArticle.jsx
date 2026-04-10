@@ -6,7 +6,7 @@ import { getJournalArticleMetadata } from "../lib/pageMetadata";
 import {
   JOURNAL_INDEX_PATH,
   buildHomeSectionPath,
-  buildJournalPostPath,
+  buildPostPath,
 } from "../lib/routes";
 
 function isExternalHref(href) {
@@ -39,9 +39,17 @@ function renderBlock(block) {
   switch (block.type) {
     case "heading":
       return block.level === 3 ? <h3>{block.text}</h3> : <h2>{block.text}</h2>;
+    case "stat":
+      return (
+        <aside className="article-stat">
+          <div className="article-stat-label">// Signal</div>
+          <div className="article-stat-value">{block.value}</div>
+          <p className="article-stat-body">{block.body}</p>
+        </aside>
+      );
     case "list":
       return (
-        <ul>
+        <ul className={block.variant === "checklist" ? "article-checklist" : undefined}>
           {block.items.map((item, index) => (
             <li key={`${block.type}-${index}`}>
               {Array.isArray(item) ? renderRichText(item, `${block.type}-${index}`) : item}
@@ -69,37 +77,80 @@ function renderBlock(block) {
 
 export default function JournalArticle({ post }) {
   const relatedPosts = getRelatedPosts(post);
+  const heroMeta = [
+    post.readingTime,
+    `By ${post.authorName ?? "Sol Rudd"}`,
+    post.metaLabel ?? "Editorial analysis",
+  ].filter(Boolean);
+  const contextPanel = post.sideNote ?? {
+    label: "// Context",
+    title: "Readable, indexable, and built for useful linking.",
+    body:
+      "Each article is structured to stay legible on the page, credible in search, and easy to connect back into the wider journal and live work across the site.",
+  };
   usePageMetadata(getJournalArticleMetadata(post));
 
   return (
     <EditorialLayout mainClassName="journal-page">
       <section className="article-hero">
         <div className="wrap">
-          <div className="article-hero-shell reveal revealed">
-            <a href={JOURNAL_INDEX_PATH} className="article-backlink">
-              <IconArrow size={12} /> Back to journal
-            </a>
-            <div className="article-topline">
-              <div className="eyebrow">
-                <IconTerm /> {post.category}
+          <div
+            className={`article-hero-grid${post.heroVisual ? " article-hero-grid--visual" : ""}`}
+          >
+            <div className="article-hero-shell reveal revealed">
+              <a href={JOURNAL_INDEX_PATH} className="article-backlink">
+                <IconArrow size={12} /> Back to journal
+              </a>
+              <div className="article-topline">
+                <div className="eyebrow">
+                  <IconTerm /> {post.category}
+                </div>
+                <div className="article-published">Published {formatPostDate(post.publishedAt)}</div>
               </div>
-              <div className="article-published">Published {formatPostDate(post.publishedAt)}</div>
+              <h1 className="article-title">{post.title}</h1>
+              <p className="article-dek">{post.description}</p>
+              <div className="article-meta">
+                {heroMeta.map((item) => (
+                  <span key={item}>{item}</span>
+                ))}
+              </div>
+              <div className="journal-chip-row">
+                {post.tags.map((tag) => (
+                  <span className="journal-chip" key={tag}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
-            <h1 className="article-title">{post.title}</h1>
-            <p className="article-dek">{post.description}</p>
-            <div className="article-meta">
-              <span>{post.readingTime}</span>
-              <span>Indexable</span>
-              <span>Founder-led</span>
-            </div>
-            <div className="journal-chip-row">
-              {post.tags.map((tag) => (
-                <span className="journal-chip" key={tag}>
-                  {tag}
-                </span>
-              ))}
-            </div>
+
+            {post.heroVisual ? (
+              <aside className="article-hero-visual reveal revealed">
+                <div className="article-hero-visual-label">{post.heroVisual.label}</div>
+                <div className="article-hero-visual-title">{post.heroVisual.title}</div>
+                <p className="article-hero-visual-body">{post.heroVisual.body}</p>
+                <div className="article-hero-visual-grid">
+                  {post.heroVisual.items.map((item) => (
+                    <div className="article-hero-visual-card" key={`${item.value}-${item.label}`}>
+                      <div className="article-hero-visual-value">{item.value}</div>
+                      <div className="article-hero-visual-note">{item.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </aside>
+            ) : null}
           </div>
+
+          {post.articleImage ? (
+            <figure className="article-hero-media reveal revealed">
+              <img
+                src={post.articleImage}
+                alt={post.articleImageAlt ?? post.title}
+                className="article-hero-image"
+                loading="eager"
+                decoding="async"
+              />
+            </figure>
+          ) : null}
         </div>
       </section>
 
@@ -117,16 +168,68 @@ export default function JournalArticle({ post }) {
                   </div>
                 ))}
               </div>
+
+              {post.faq?.length ? (
+                <section className="article-faq">
+                  <h2>FAQ</h2>
+                  <div className="article-faq-list">
+                    {post.faq.map((item) => (
+                      <article className="article-faq-item" key={item.question}>
+                        <h3>{item.question}</h3>
+                        <p>{item.answer}</p>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+
+              {post.references?.length && post.footerReferences ? (
+                <section className="article-sources">
+                  <h2>Sources</h2>
+                  <div className="article-sources-list">
+                    {post.references.map((reference) => {
+                      const external = reference.external ?? isExternalHref(reference.href);
+
+                      return (
+                        <article className="article-source-item" key={reference.href}>
+                          <a
+                            href={reference.href}
+                            className="journal-ref-link"
+                            target={external ? "_blank" : undefined}
+                            rel={external ? "noreferrer" : undefined}
+                          >
+                            {reference.label} <IconArrow size={12} />
+                          </a>
+                          <p>{reference.note}</p>
+                        </article>
+                      );
+                    })}
+                  </div>
+                </section>
+              ) : null}
+
+              {post.cta ? (
+                <section className="article-cta">
+                  <div className="article-cta-label">// Next Step</div>
+                  <h2>{post.cta.headline}</h2>
+                  <p>{post.cta.body}</p>
+                  <div className="article-cta-actions">
+                    <a href={post.cta.primary.href} className="btn btn-solid">
+                      {post.cta.primary.label} <IconArrow size={16} />
+                    </a>
+                    <a href={post.cta.secondary.href} className="btn btn-ghost">
+                      {post.cta.secondary.label} <IconArrow size={16} />
+                    </a>
+                  </div>
+                </section>
+              ) : null}
             </article>
 
             <aside className="article-side reveal revealed">
               <div className="journal-side-panel">
-                <div className="journal-side-label">// Route</div>
-                <div className="journal-side-title">Clean structure for future publishing.</div>
-                <div className="journal-side-body">
-                  Journal entries live at stable URLs now. Future case studies can extend into
-                  a parallel {"`/projects/<slug>/`"} lane without rewriting the current system.
-                </div>
+                <div className="journal-side-label">{contextPanel.label}</div>
+                <div className="journal-side-title">{contextPanel.title}</div>
+                <div className="journal-side-body">{contextPanel.body}</div>
               </div>
 
               <div className="journal-side-panel">
@@ -134,7 +237,7 @@ export default function JournalArticle({ post }) {
                 <div className="journal-side-links">
                   {relatedPosts.map((relatedPost) => (
                     <a
-                      href={buildJournalPostPath(relatedPost.slug)}
+                      href={buildPostPath(relatedPost)}
                       className="journal-inline-link"
                       key={relatedPost.slug}
                     >
@@ -159,7 +262,7 @@ export default function JournalArticle({ post }) {
                 </div>
               </div>
 
-              {post.references?.length ? (
+              {post.references?.length && !post.footerReferences ? (
                 <div className="journal-side-panel">
                   <div className="journal-side-label">// References</div>
                   <div className="journal-ref-list">
@@ -209,12 +312,12 @@ export default function JournalArticle({ post }) {
                 <article className="article-more-card" key={relatedPost.slug}>
                   <div className="journal-row-category">{relatedPost.category}</div>
                   <h3 className="article-more-title">
-                    <a href={buildJournalPostPath(relatedPost.slug)}>{relatedPost.title}</a>
+                    <a href={buildPostPath(relatedPost)}>{relatedPost.title}</a>
                   </h3>
                   <p className="article-more-excerpt">{relatedPost.excerpt}</p>
                   <div className="article-more-footer">
                     <span>{formatPostDate(relatedPost.publishedAt)}</span>
-                    <a href={buildJournalPostPath(relatedPost.slug)} className="journal-inline-link">
+                    <a href={buildPostPath(relatedPost)} className="journal-inline-link">
                       Read note <IconArrow size={12} />
                     </a>
                   </div>

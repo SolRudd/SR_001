@@ -1,6 +1,7 @@
 /* ── responsive ── */
 @media (max-width: 1000px) {
   .journal-hero-grid,
+  .article-hero-grid,
   .journal-archive-grid,
   .article-grid { grid-template-columns: 1fr; }
   .article-more-grid { grid-template-columns: 1fr; }
@@ -36,7 +37,8 @@
   .journal-feature,
   .journal-side-panel,
   .article-hero-shell,
-  .article-more-shell { padding: 24px 20px; }
+  .article-more-shell,
+  .article-hero-visual { padding: 24px 20px; }
   .journal-row { padding: 22px 20px; }
   .article-intro { font-size: 17px; line-height: 1.8; }
   .article-prose h2 { font-size: 24px; }
@@ -44,6 +46,17 @@
   .article-prose p,
   .article-prose li { font-size: 15px; line-height: 1.85; }
   .article-prose pre { padding: 18px; }
+  .article-hero-visual-title,
+  .article-stat-value { font-size: 26px; letter-spacing: -1px; }
+  .article-faq h2,
+  .article-sources h2,
+  .article-cta h2 { font-size: 24px; }
+  .article-faq-item,
+  .article-source-item,
+  .article-stat,
+  .article-cta { padding: 20px; }
+  .article-checklist li { padding: 16px 16px 16px 44px; }
+  .article-cta-actions { flex-direction: column; }
   .consent-shell { left: 12px; right: 12px; bottom: 12px; }
   .consent-banner { max-height: calc(100vh - 24px); overflow-y: auto; }
   .consent-main,
@@ -221,4 +234,3 @@ html.og-homepage-html::-webkit-scrollbar,
 body.og-homepage-body::-webkit-scrollbar {
   display: none;
 }
-

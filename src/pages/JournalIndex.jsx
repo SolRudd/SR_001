@@ -5,7 +5,7 @@ import { usePageMetadata } from "../lib/metadata";
 import { getJournalIndexMetadata } from "../lib/pageMetadata";
 import {
   buildHomeSectionPath,
-  buildJournalPostPath,
+  buildPostPath,
 } from "../lib/routes";
 
 const COVERAGE_AREAS = [
@@ -92,7 +92,7 @@ export default function JournalIndex() {
                   </span>
                 ))}
               </div>
-              <a href={buildJournalPostPath(featuredPost.slug)} className="journal-feature-link">
+              <a href={buildPostPath(featuredPost)} className="journal-feature-link">
                 Read note <IconArrow size={12} />
               </a>
             </article>
@@ -124,7 +124,7 @@ export default function JournalIndex() {
                     <div className="journal-row-main">
                       <div className="journal-row-category">{post.category}</div>
                       <h3 className="journal-row-title">
-                        <a href={buildJournalPostPath(post.slug)}>{post.title}</a>
+                        <a href={buildPostPath(post)}>{post.title}</a>
                       </h3>
                       <p className="journal-row-excerpt">{post.excerpt}</p>
                     </div>
@@ -167,7 +167,7 @@ export default function JournalIndex() {
                   <a href={buildHomeSectionPath("work")} className="journal-inline-link">
                     Product index <IconArrow size={12} />
                   </a>
-                  <a href={buildJournalPostPath(nextReadPost.slug)} className="journal-inline-link">
+                  <a href={buildPostPath(nextReadPost)} className="journal-inline-link">
                     Next read <IconArrow size={12} />
                   </a>
                 </div>

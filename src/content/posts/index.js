@@ -1,4 +1,6 @@
 import buzzboostFounderSiteLog from "./buzzboost-founder-site-log.js";
+import claudeMythosAiSecurity from "./claude-mythos-ai-security.js";
+import claudeMythosAiVulnerabilityArmsRace from "./claude-mythos-ai-vulnerability-arms-race.js";
 import codexOpenclawAndRealAgenticWorkflows from "./codex-openclaw-and-real-agentic-workflows.js";
 import codexTerminalAiWorkflows2026 from "./codex-terminal-ai-workflows-2026.js";
 import fromDesignReferenceToProductionReact from "./from-design-reference-to-production-react.js";
@@ -15,6 +17,8 @@ const POST_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
 });
 
 const POSTS = [
+  claudeMythosAiSecurity,
+  claudeMythosAiVulnerabilityArmsRace,
   whyImTestingLocalAiAgents,
   whyAiAgentsNeedGuardrails,
   codexTerminalAiWorkflows2026,

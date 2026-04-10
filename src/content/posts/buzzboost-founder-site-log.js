@@ -13,6 +13,9 @@ const post = {
   category: "Build Log",
   readingTime: "7 min read",
   publishedAt: "2026-03-12",
+  articleImage: "/articles/heroes/shipping-buzzboost-without-bloat-hero.jpg",
+  articleImageAlt:
+    "A lean central workflow hub connected to a small set of clean interface panels.",
   tags: ["Founder notes", "Positioning", "Frontend systems"],
   relatedSlugs: [
     "greentracer-building-a-signal-product",

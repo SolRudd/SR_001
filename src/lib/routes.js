@@ -1,11 +1,26 @@
 export const HOME_PATH = "/";
 export const JOURNAL_INDEX_PATH = "/journal/";
+export const INSIGHTS_INDEX_PATH = "/insights/";
 export const SOCIAL_LAUNCH_CARD_PATH = "/preview/social-launch-card/";
 export const SOCIAL_LAUNCH_CARD_FINAL_PATH = "/preview/social-launch-card/final/";
 export const SOCIAL_LAUNCH_CARD_MINIMAL_PATH = "/preview/social-launch-card/minimal/";
 
 export function buildJournalPostPath(slug) {
   return `/journal/${slug}/`;
+}
+
+export function buildInsightsPostPath(slug) {
+  return `/insights/${slug}/`;
+}
+
+export function buildPostPath(postOrSlug) {
+  if (typeof postOrSlug === "object" && postOrSlug?.pathname) {
+    return postOrSlug.pathname;
+  }
+
+  const slug = typeof postOrSlug === "object" ? postOrSlug?.slug : postOrSlug;
+
+  return buildJournalPostPath(slug);
 }
 
 export function buildHomeSectionPath(sectionId) {
@@ -30,7 +45,7 @@ export function resolveRoute(pathname = "/") {
     return { type: "home" };
   }
 
-  if (normalized === "/journal") {
+  if (normalized === "/journal" || normalized === "/insights") {
     return { type: "journal-index" };
   }
 
@@ -48,6 +63,14 @@ export function resolveRoute(pathname = "/") {
 
   if (normalized.startsWith("/journal/")) {
     const slug = normalized.slice("/journal/".length);
+
+    if (slug && !slug.includes("/")) {
+      return { type: "journal-article", slug };
+    }
+  }
+
+  if (normalized.startsWith("/insights/")) {
+    const slug = normalized.slice("/insights/".length);
 
     if (slug && !slug.includes("/")) {
       return { type: "journal-article", slug };

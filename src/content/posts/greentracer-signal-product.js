@@ -14,6 +14,9 @@ const post = {
   category: "Product Breakdown",
   readingTime: "8 min read",
   publishedAt: "2026-02-27",
+  articleImage: "/articles/heroes/greentracer-signal-product-hero.jpg",
+  articleImageAlt:
+    "A green-toned digital dashboard visualisation suggesting measurement, signal, and product instrumentation.",
   tags: ["Product systems", "GreenTracer", "Operator thinking"],
   relatedSlugs: [
     "shipping-buzzboost-without-bloat",

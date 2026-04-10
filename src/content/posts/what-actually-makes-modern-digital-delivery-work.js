@@ -16,6 +16,9 @@ const post = {
   category: "Delivery Note",
   readingTime: "8 min read",
   publishedAt: "2026-03-30",
+  articleImage: "/articles/heroes/modern-digital-delivery-hero.jpg",
+  articleImageAlt:
+    "A central technical platform coordinating multiple connected delivery nodes across a digital system.",
   tags: ["Digital delivery", "Operational systems", "Specialist execution"],
   relatedSlugs: [
     "why-good-digital-work-usually-comes-from-specialist-teams",

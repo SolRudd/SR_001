@@ -19,6 +19,9 @@ const post = {
   category: "Agent Systems Note",
   readingTime: "12 min read",
   publishedAt: "2026-03-31",
+  articleImage: "/articles/heroes/real-agentic-workflows-hero.jpg",
+  articleImageAlt:
+    "Modular digital workflow blocks linked together in a coordinated agentic system.",
   tags: ["Agentic workflows", "Codex", "Multi-agent systems", "Operator thinking"],
   relatedSlugs: [
     "from-design-reference-to-production-react",

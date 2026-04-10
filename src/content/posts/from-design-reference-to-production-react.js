@@ -14,6 +14,9 @@ const post = {
   category: "Workflow Note",
   readingTime: "8 min read",
   publishedAt: "2026-01-31",
+  articleImage: "/articles/heroes/design-reference-to-production-react-hero.jpg",
+  articleImageAlt:
+    "Code panels and connected transformation nodes flowing into a production-ready system.",
   tags: ["AI workflows", "React", "System design"],
   relatedSlugs: [
     "shipping-buzzboost-without-bloat",
