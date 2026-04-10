@@ -31,7 +31,7 @@ export default function Footer() {
             <a href="/" className="ftr-logo">
               <img
                 src="/brand/sol-rudd.svg"
-                alt="Sol Rudd"
+                alt="Sol Rudd logo"
                 className="ftr-logo-mark"
                 width="250"
                 height="59"

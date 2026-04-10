@@ -3,12 +3,15 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildManagedHeadMarkup } from "../src/lib/seo.js";
 import { getPrerenderMetadataEntries } from "../src/lib/pageMetadata.js";
+import { buildSitemapXml } from "../src/lib/sitemap.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const projectRoot = path.resolve(__dirname, "..");
 const distRoot = path.join(projectRoot, "dist");
 const templatePath = path.join(distRoot, "index.html");
+const publicSitemapPath = path.join(projectRoot, "public", "sitemap.xml");
+const distSitemapPath = path.join(distRoot, "sitemap.xml");
 
 const SEO_BLOCK_PATTERN = /<!-- SEO:BEGIN -->([\s\S]*?)<!-- SEO:END -->/;
 
@@ -43,6 +46,13 @@ async function main() {
       await fs.writeFile(outputPath, html, "utf8");
     })
   );
+
+  const sitemapXml = buildSitemapXml();
+
+  await Promise.all([
+    fs.writeFile(publicSitemapPath, sitemapXml, "utf8"),
+    fs.writeFile(distSitemapPath, sitemapXml, "utf8"),
+  ]);
 }
 
 main().catch((error) => {

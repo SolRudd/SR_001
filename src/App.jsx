@@ -6,7 +6,7 @@ import NotFound from "./pages/NotFound";
 import ConsentAwareAnalytics from "./components/ConsentAwareAnalytics";
 import CookieConsentBanner from "./components/CookieConsentBanner";
 import { getPostBySlug } from "./content/posts";
-import { resolveRoute } from "./lib/routes";
+import { isCanonicalPostPathname, resolveRoute } from "./lib/routes";
 
 const SocialLaunchCardPreview = lazy(() => import("./pages/SocialLaunchCardPreview"));
 
@@ -23,7 +23,9 @@ export default function App() {
     page = <JournalIndex />;
   } else if (route.type === "journal-article") {
     const post = getPostBySlug(route.slug);
-    page = post ? <JournalArticle post={post} /> : <NotFound />;
+    page = post && isCanonicalPostPathname(window.location.pathname, post)
+      ? <JournalArticle post={post} />
+      : <NotFound />;
   } else if (route.type === "social-launch-card") {
     page = (
       <Suspense fallback={null}>

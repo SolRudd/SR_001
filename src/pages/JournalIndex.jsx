@@ -4,6 +4,10 @@ import { posts, formatPostDate } from "../content/posts";
 import { usePageMetadata } from "../lib/metadata";
 import { getJournalIndexMetadata } from "../lib/pageMetadata";
 import {
+  getJournalCoverImage,
+  getPostCardImage,
+} from "../lib/postImages";
+import {
   buildHomeSectionPath,
   buildPostPath,
 } from "../lib/routes";
@@ -18,6 +22,8 @@ const COVERAGE_AREAS = [
 export default function JournalIndex() {
   const [featuredPost, ...archivePosts] = posts;
   const nextReadPost = archivePosts[0] ?? featuredPost;
+  const coverImage = getJournalCoverImage();
+  const featuredCardImage = getPostCardImage(featuredPost);
 
   usePageMetadata(getJournalIndexMetadata());
 
@@ -76,6 +82,21 @@ export default function JournalIndex() {
             </div>
 
             <article className="journal-feature reveal revealed">
+              {featuredCardImage ? (
+                <a
+                  href={buildPostPath(featuredPost)}
+                  className="journal-feature-media"
+                  aria-label={`Read ${featuredPost.title}`}
+                >
+                  <img
+                    src={featuredCardImage.src}
+                    alt={featuredCardImage.alt}
+                    className="journal-feature-image"
+                    loading="eager"
+                    decoding="async"
+                  />
+                </a>
+              ) : null}
               <div className="journal-feature-head">
                 <div className="eyebrow">
                   <IconTerm /> Latest Dispatch
@@ -97,6 +118,17 @@ export default function JournalIndex() {
               </a>
             </article>
           </div>
+
+          <figure className="journal-cover reveal revealed">
+            <img
+              src={coverImage.src}
+              alt={coverImage.alt}
+              className="journal-cover-image"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+            />
+          </figure>
         </div>
       </section>
 
@@ -118,28 +150,47 @@ export default function JournalIndex() {
               </div>
 
               <div className="journal-list">
-                {posts.map((post) => (
-                  <article className="journal-row" key={post.slug}>
-                    <div className="journal-row-date">{formatPostDate(post.publishedAt)}</div>
-                    <div className="journal-row-main">
-                      <div className="journal-row-category">{post.category}</div>
-                      <h3 className="journal-row-title">
-                        <a href={buildPostPath(post)}>{post.title}</a>
-                      </h3>
-                      <p className="journal-row-excerpt">{post.excerpt}</p>
-                    </div>
-                    <div className="journal-row-side">
-                      <div className="journal-chip-row journal-chip-row-compact">
-                        {post.tags.map((tag) => (
-                          <span className="journal-chip" key={tag}>
-                            {tag}
-                          </span>
-                        ))}
+                {posts.map((post) => {
+                  const cardImage = getPostCardImage(post);
+
+                  return (
+                    <article className="journal-row" key={post.slug}>
+                      <div className="journal-row-date">{formatPostDate(post.publishedAt)}</div>
+                      <div className="journal-row-main">
+                        {cardImage ? (
+                          <a
+                            href={buildPostPath(post)}
+                            className="journal-row-media"
+                            aria-label={`Read ${post.title}`}
+                          >
+                            <img
+                              src={cardImage.src}
+                              alt={cardImage.alt}
+                              className="journal-row-image"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </a>
+                        ) : null}
+                        <div className="journal-row-category">{post.category}</div>
+                        <h3 className="journal-row-title">
+                          <a href={buildPostPath(post)}>{post.title}</a>
+                        </h3>
+                        <p className="journal-row-excerpt">{post.excerpt}</p>
                       </div>
-                      <span className="journal-row-read">{post.readingTime}</span>
-                    </div>
-                  </article>
-                ))}
+                      <div className="journal-row-side">
+                        <div className="journal-chip-row journal-chip-row-compact">
+                          {post.tags.map((tag) => (
+                            <span className="journal-chip" key={tag}>
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <span className="journal-row-read">{post.readingTime}</span>
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
             </div>
 

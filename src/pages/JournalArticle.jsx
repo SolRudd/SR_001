@@ -3,6 +3,7 @@ import { IconArrow, IconRadar, IconTerm } from "../components/Icons";
 import { formatPostDate, getRelatedPosts } from "../content/posts";
 import { usePageMetadata } from "../lib/metadata";
 import { getJournalArticleMetadata } from "../lib/pageMetadata";
+import { getPostHeroImage } from "../lib/postImages";
 import {
   JOURNAL_INDEX_PATH,
   buildHomeSectionPath,
@@ -77,6 +78,7 @@ function renderBlock(block) {
 
 export default function JournalArticle({ post }) {
   const relatedPosts = getRelatedPosts(post);
+  const heroImage = getPostHeroImage(post);
   const heroMeta = [
     post.readingTime,
     `By ${post.authorName ?? "Sol Rudd"}`,
@@ -140,14 +142,15 @@ export default function JournalArticle({ post }) {
             ) : null}
           </div>
 
-          {post.articleImage ? (
+          {heroImage ? (
             <figure className="article-hero-media reveal revealed">
               <img
-                src={post.articleImage}
-                alt={post.articleImageAlt ?? post.title}
+                src={heroImage.src}
+                alt={heroImage.alt}
                 className="article-hero-image"
                 loading="eager"
                 decoding="async"
+                fetchPriority="high"
               />
             </figure>
           ) : null}

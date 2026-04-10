@@ -8,12 +8,13 @@ import {
   X_URL,
   buildAbsoluteUrl,
 } from "../content/site.js";
-import { JOURNAL_OG_IMAGE, resolveSocialImage } from "./seo.js";
+import { getPostSocialImage } from "./postImages.js";
 import { buildPostPath } from "./routes.js";
 
 const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const JOURNAL_ID = `${SITE_URL}/journal/#blog`;
+const LOGO_URL = buildAbsoluteUrl("/brand/sol-rudd.svg");
 
 const SAME_AS = [
   X_URL,
@@ -39,6 +40,8 @@ export function getBaseSchema() {
       name: SITE_NAME,
       inLanguage: "en-GB",
       description: DEFAULT_DESCRIPTION,
+      image: buildAbsoluteUrl(DEFAULT_OG_IMAGE),
+      logo: LOGO_URL,
       publisher: { "@id": PERSON_ID },
     },
   ];
@@ -59,11 +62,7 @@ export function getJournalSchema() {
 
 export function getJournalArticleSchema(post) {
   const articleUrl = buildAbsoluteUrl(buildPostPath(post));
-  const socialImage = resolveSocialImage({
-    imagePath: post.ogImage,
-    imageAlt: post.ogImageAlt,
-    fallbackImagePath: post.articleImage ?? JOURNAL_OG_IMAGE,
-  });
+  const socialImage = getPostSocialImage(post);
 
   return {
     "@type": post.schemaType ?? "BlogPosting",
@@ -77,6 +76,8 @@ export function getJournalArticleSchema(post) {
     author: { "@id": PERSON_ID },
     publisher: { "@id": PERSON_ID },
     image: buildAbsoluteUrl(socialImage.imagePath),
+    primaryImageOfPage: buildAbsoluteUrl(socialImage.imagePath),
+    thumbnailUrl: buildAbsoluteUrl(socialImage.imagePath),
     articleSection: post.category,
     keywords: post.tags,
     isPartOf: { "@id": JOURNAL_ID },

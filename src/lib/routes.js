@@ -23,6 +23,10 @@ export function buildPostPath(postOrSlug) {
   return buildJournalPostPath(slug);
 }
 
+export function isCanonicalPostPathname(pathname, post) {
+  return normalizePathname(pathname) === normalizePathname(buildPostPath(post));
+}
+
 export function buildHomeSectionPath(sectionId) {
   return `/#${sectionId.replace(/^#/, "")}`;
 }

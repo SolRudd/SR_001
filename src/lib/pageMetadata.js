@@ -19,6 +19,11 @@ import {
   JOURNAL_OG_IMAGE_ALT,
   buildMetadataPayload,
 } from "./seo.js";
+import {
+  JOURNAL_COVER_IMAGE,
+  JOURNAL_COVER_IMAGE_ALT,
+  getPostSocialImage,
+} from "./postImages.js";
 
 export function getHomePageMetadata({ robots } = {}) {
   return buildMetadataPayload({
@@ -37,6 +42,8 @@ export function getJournalIndexMetadata() {
       "Founder-led notes on products, execution, frontend systems, AI workflows, and real build decisions from live work.",
     pathname: JOURNAL_INDEX_PATH,
     keywords: ["founder notes", "frontend systems", "AI workflows", "product breakdowns"],
+    imagePath: JOURNAL_COVER_IMAGE,
+    imageAlt: JOURNAL_COVER_IMAGE_ALT,
     fallbackImagePath: JOURNAL_OG_IMAGE,
     fallbackImageAlt: JOURNAL_OG_IMAGE_ALT,
     schema: [...getBaseSchema(), getJournalSchema()],
@@ -44,6 +51,7 @@ export function getJournalIndexMetadata() {
 }
 
 export function getJournalArticleMetadata(post) {
+  const socialImage = getPostSocialImage(post);
   const pageSchema = [...getBaseSchema(), getJournalSchema(), getJournalArticleSchema(post)];
   const faqSchema = getJournalFaqSchema(post);
 
@@ -55,10 +63,10 @@ export function getJournalArticleMetadata(post) {
     title: buildPageTitle(post.metaTitle ?? post.title),
     description: post.metaDescription ?? post.description,
     pathname: buildPostPath(post),
-    imagePath: post.ogImage,
-    imageAlt: post.ogImageAlt,
-    fallbackImagePath: post.articleImage ?? JOURNAL_OG_IMAGE,
-    fallbackImageAlt: post.articleImageAlt ?? JOURNAL_OG_IMAGE_ALT,
+    imagePath: socialImage.src,
+    imageAlt: socialImage.alt,
+    fallbackImagePath: JOURNAL_OG_IMAGE,
+    fallbackImageAlt: JOURNAL_OG_IMAGE_ALT,
     type: "article",
     publishedAt: post.publishedAt,
     section: post.category,

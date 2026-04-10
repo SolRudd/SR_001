@@ -94,11 +94,12 @@ export default function Header() {
           <a href="/" className="hdr-logo" onClick={close}>
             <img
               src="/brand/sol-rudd.svg"
-              alt="Sol Rudd"
+              alt="Sol Rudd logo"
               className="hdr-logo-mark"
               width="250"
               height="59"
               decoding="async"
+              fetchPriority="high"
             />
           </a>
 

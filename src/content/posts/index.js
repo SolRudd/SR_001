@@ -39,14 +39,38 @@ export function getPostBySlug(slug) {
 }
 
 export function getRelatedPosts(post, limit = 2) {
-  if (!post?.relatedSlugs?.length) {
-    return POSTS.filter(({ slug }) => slug !== post?.slug).slice(0, limit);
+  const selectedPosts = [];
+  const seenSlugs = new Set([post?.slug]);
+
+  for (const slug of post?.relatedSlugs ?? []) {
+    const relatedPost = getPostBySlug(slug);
+
+    if (!relatedPost || seenSlugs.has(relatedPost.slug)) {
+      continue;
+    }
+
+    selectedPosts.push(relatedPost);
+    seenSlugs.add(relatedPost.slug);
   }
 
-  return post.relatedSlugs
-    .map((slug) => getPostBySlug(slug))
-    .filter(Boolean)
-    .slice(0, limit);
+  if (selectedPosts.length >= limit) {
+    return selectedPosts.slice(0, limit);
+  }
+
+  for (const candidatePost of POSTS) {
+    if (seenSlugs.has(candidatePost.slug)) {
+      continue;
+    }
+
+    selectedPosts.push(candidatePost);
+    seenSlugs.add(candidatePost.slug);
+
+    if (selectedPosts.length >= limit) {
+      break;
+    }
+  }
+
+  return selectedPosts;
 }
 
 export function formatPostDate(dateValue) {
