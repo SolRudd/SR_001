@@ -155,38 +155,40 @@ export default function JournalIndex() {
 
                   return (
                     <article className="journal-row" key={post.slug}>
-                      <div className="journal-row-date">{formatPostDate(post.publishedAt)}</div>
-                      <div className="journal-row-main">
-                        {cardImage ? (
-                          <a
-                            href={buildPostPath(post)}
-                            className="journal-row-media"
-                            aria-label={`Read ${post.title}`}
-                          >
-                            <img
-                              src={cardImage.src}
-                              alt={cardImage.alt}
-                              className="journal-row-image"
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          </a>
-                        ) : null}
-                        <div className="journal-row-category">{post.category}</div>
+                      <a
+                        href={buildPostPath(post)}
+                        className="journal-row-media"
+                        aria-label={`Read ${post.title}`}
+                      >
+                        <img
+                          src={cardImage.src}
+                          alt={cardImage.alt}
+                          className="journal-row-image"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </a>
+                      <div className="journal-row-body">
+                        <div className="journal-row-head">
+                          <div className="journal-row-category">{post.category}</div>
+                          <div className="journal-row-date">
+                            {formatPostDate(post.publishedAt)}
+                          </div>
+                        </div>
                         <h3 className="journal-row-title">
                           <a href={buildPostPath(post)}>{post.title}</a>
                         </h3>
                         <p className="journal-row-excerpt">{post.excerpt}</p>
-                      </div>
-                      <div className="journal-row-side">
-                        <div className="journal-chip-row journal-chip-row-compact">
-                          {post.tags.map((tag) => (
-                            <span className="journal-chip" key={tag}>
-                              {tag}
-                            </span>
-                          ))}
+                        <div className="journal-row-footer">
+                          <div className="journal-chip-row">
+                            {post.tags.map((tag) => (
+                              <span className="journal-chip" key={tag}>
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                          <span className="journal-row-read">{post.readingTime}</span>
                         </div>
-                        <span className="journal-row-read">{post.readingTime}</span>
                       </div>
                     </article>
                   );

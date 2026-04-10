@@ -25,6 +25,9 @@ const post = {
   publishedAt: "2026-04-10",
   authorName: "Sol Rudd",
   schemaType: "Article",
+  articleImage: "/articles/heroes/claude-mythos-ai-security-hero.jpg",
+  articleImageAlt:
+    "Layered cybersecurity dashboards and alerts representing AI-driven vulnerability discovery and security oversight.",
   tags: [
     "Claude Mythos",
     "Project Glasswing",

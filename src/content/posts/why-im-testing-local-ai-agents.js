@@ -16,6 +16,9 @@ const post = {
   category: "Infrastructure Note",
   readingTime: "8 min read",
   publishedAt: "2026-04-06",
+  articleImage: "/articles/heroes/why-im-testing-local-ai-agents-hero.jpg",
+  articleImageAlt:
+    "A signal-monitoring device and data trace representing local AI workflows, infrastructure control, and operational visibility.",
   tags: ["Local AI", "Ollama", "Open models", "Agent infrastructure"],
   relatedSlugs: [
     "why-ai-agents-need-guardrails",
