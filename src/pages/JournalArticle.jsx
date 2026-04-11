@@ -3,7 +3,6 @@ import { IconArrow, IconRadar, IconTerm } from "../components/Icons";
 import { formatPostDate, getRelatedPosts } from "../content/posts";
 import { usePageMetadata } from "../lib/metadata";
 import { getJournalArticleMetadata } from "../lib/pageMetadata";
-import { getPostHeroImage } from "../lib/postImages";
 import {
   JOURNAL_INDEX_PATH,
   buildHomeSectionPath,
@@ -36,10 +35,55 @@ function renderRichText(segments, keyPrefix) {
   });
 }
 
+function slugifyHeading(text = "") {
+  return String(text)
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
+function buildArticleOutline(blocks = []) {
+  const headingCounts = new Map();
+  const outline = [];
+
+  const contentBlocks = blocks.map((block) => {
+    if (block.type !== "heading") {
+      return block;
+    }
+
+    const baseId = slugifyHeading(block.text) || "section";
+    const duplicateCount = (headingCounts.get(baseId) ?? 0) + 1;
+    headingCounts.set(baseId, duplicateCount);
+
+    const anchorId = duplicateCount === 1 ? baseId : `${baseId}-${duplicateCount}`;
+
+    if (block.level === 2 || block.level === 3) {
+      outline.push({
+        id: anchorId,
+        text: block.text,
+        level: block.level,
+      });
+    }
+
+    return {
+      ...block,
+      anchorId,
+    };
+  });
+
+  return { contentBlocks, outline };
+}
+
 function renderBlock(block) {
   switch (block.type) {
     case "heading":
-      return block.level === 3 ? <h3>{block.text}</h3> : <h2>{block.text}</h2>;
+      return block.level === 3 ? (
+        <h3 id={block.anchorId}>{block.text}</h3>
+      ) : (
+        <h2 id={block.anchorId}>{block.text}</h2>
+      );
     case "stat":
       return (
         <aside className="article-stat">
@@ -78,7 +122,7 @@ function renderBlock(block) {
 
 export default function JournalArticle({ post }) {
   const relatedPosts = getRelatedPosts(post);
-  const heroImage = getPostHeroImage(post);
+  const { contentBlocks, outline } = buildArticleOutline(post.content);
   const heroMeta = [
     post.readingTime,
     `By ${post.authorName ?? "Sol Rudd"}`,
@@ -141,19 +185,6 @@ export default function JournalArticle({ post }) {
               </aside>
             ) : null}
           </div>
-
-          {heroImage ? (
-            <figure className="article-hero-media reveal revealed">
-              <img
-                src={heroImage.src}
-                alt={heroImage.alt}
-                className="article-hero-image"
-                loading="eager"
-                decoding="async"
-                fetchPriority="high"
-              />
-            </figure>
-          ) : null}
         </div>
       </section>
 
@@ -164,8 +195,28 @@ export default function JournalArticle({ post }) {
           <div className="article-grid">
             <article className="article-body reveal revealed">
               <div className="article-intro">{post.excerpt}</div>
+
+              {outline.length ? (
+                <nav className="article-toc" aria-label="Table of contents">
+                  <div className="article-toc-label">// On This Page</div>
+                  <div className="article-toc-list">
+                    {outline.map((item) => (
+                      <a
+                        href={`#${item.id}`}
+                        className={`article-toc-link${
+                          item.level === 3 ? " article-toc-link--sub" : ""
+                        }`}
+                        key={item.id}
+                      >
+                        {item.text}
+                      </a>
+                    ))}
+                  </div>
+                </nav>
+              ) : null}
+
               <div className="article-prose">
-                {post.content.map((block, index) => (
+                {contentBlocks.map((block, index) => (
                   <div className="article-block" key={`${block.type}-${index}`}>
                     {renderBlock(block)}
                   </div>

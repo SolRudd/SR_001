@@ -3,7 +3,7 @@ import { IconArrow, IconPen, IconRadar, IconTerm } from "../components/Icons";
 import { posts, formatPostDate } from "../content/posts";
 import { usePageMetadata } from "../lib/metadata";
 import { getJournalIndexMetadata } from "../lib/pageMetadata";
-import { getPostCardImage } from "../lib/postImages";
+import { getJournalCoverImage, getPostCardImage } from "../lib/postImages";
 import {
   buildHomeSectionPath,
   buildPostPath,
@@ -19,7 +19,7 @@ const COVERAGE_AREAS = [
 export default function JournalIndex() {
   const [featuredPost, ...archivePosts] = posts;
   const nextReadPost = archivePosts[0] ?? featuredPost;
-  const featuredCardImage = getPostCardImage(featuredPost);
+  const coverImage = getJournalCoverImage();
 
   usePageMetadata(getJournalIndexMetadata());
 
@@ -78,21 +78,6 @@ export default function JournalIndex() {
             </div>
 
             <article className="journal-feature reveal revealed">
-              {featuredCardImage ? (
-                <a
-                  href={buildPostPath(featuredPost)}
-                  className="journal-feature-media"
-                  aria-label={`Read ${featuredPost.title}`}
-                >
-                  <img
-                    src={featuredCardImage.src}
-                    alt={featuredCardImage.alt}
-                    className="journal-feature-image"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </a>
-              ) : null}
               <div className="journal-feature-head">
                 <div className="eyebrow">
                   <IconTerm /> Latest Dispatch
@@ -123,6 +108,21 @@ export default function JournalIndex() {
         <div className="wrap">
           <div className="journal-archive-grid">
             <div className="journal-list-wrap reveal revealed">
+              <figure className="journal-archive-visual">
+                <img
+                  src={coverImage.src}
+                  alt={coverImage.alt}
+                  className="journal-archive-visual-image"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                />
+                <figcaption className="journal-archive-visual-copy">
+                  <div className="journal-side-label">// Editorial Visual</div>
+                  <p>Signal, systems, delivery, and execution notes from live work.</p>
+                </figcaption>
+              </figure>
+
               <div className="sec-head journal-sec-head">
                 <div className="eyebrow">
                   <IconRadar /> Archive

@@ -2,8 +2,8 @@
 @media (max-width: 1000px) {
   .journal-hero-grid,
   .article-hero-grid,
-  .journal-archive-grid,
   .article-grid { grid-template-columns: 1fr; }
+  .journal-archive-grid { grid-template-columns: 1fr; }
   .article-more-grid { grid-template-columns: 1fr; }
   .stack-layout  { grid-template-columns: 1fr; }
   .stack-head    { border-right: none; border-bottom: 1px solid var(--b0); }
@@ -36,9 +36,18 @@
   .article-hero-shell,
   .article-more-shell,
   .article-hero-visual { padding: 24px 20px; }
-  .journal-feature-media { margin: -24px -20px 20px; }
+  .journal-archive-visual {
+    aspect-ratio: 16 / 7;
+    margin-bottom: 28px;
+  }
+  .journal-archive-visual-copy {
+    left: 20px;
+    right: 20px;
+    bottom: 18px;
+    max-width: none;
+  }
   .journal-row-body { padding: 20px; }
-  .article-hero-media { aspect-ratio: 4 / 3; }
+  .article-toc { padding: 20px; }
   .article-intro { font-size: 17px; line-height: 1.8; }
   .article-prose h2 { font-size: 24px; }
   .article-prose h3 { font-size: 20px; }
