@@ -24,16 +24,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://solrudd.co.uk/insights/claude-mythos-ai-security/</loc>
-    <lastmod>2026-04-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://solrudd.co.uk/articles/heroes/claude-mythos-ai-security-hero.jpg</image:loc>
-      <image:title>Code, telemetry, and security panels representing AI-driven vulnerability discovery and technical oversight.</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://solrudd.co.uk/insights/claude-mythos-ai-vulnerability-arms-race/</loc>
     <lastmod>2026-04-10</lastmod>
     <changefreq>monthly</changefreq>

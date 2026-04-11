@@ -107,6 +107,7 @@
   object-fit: cover;
   object-position: center;
   transition: transform .45s ease;
+}
 .journal-row:hover .journal-row-image {
   transform: scale(1.03);
 }
