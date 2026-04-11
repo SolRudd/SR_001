@@ -27,7 +27,7 @@ const post = {
   schemaType: "Article",
   articleImage: "/articles/heroes/claude-mythos-ai-security-hero.jpg",
   articleImageAlt:
-    "Layered cybersecurity dashboards and alerts representing AI-driven vulnerability discovery and security oversight.",
+    "Code, telemetry, and security panels representing AI-driven vulnerability discovery and technical oversight.",
   tags: [
     "Claude Mythos",
     "Project Glasswing",

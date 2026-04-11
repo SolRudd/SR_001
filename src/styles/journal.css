@@ -160,23 +160,6 @@
   line-height: 1.8;
   color: var(--ts);
 }
-.journal-cover {
-  margin-top: 32px;
-  border: 1px solid var(--b1);
-  background: rgba(7,7,15,0.88);
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 16 / 7;
-}
-.journal-cover::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-  opacity: .38;
-  z-index: 1;
-}
 .journal-chip-row {
   display: flex;
   flex-wrap: wrap;
@@ -399,6 +382,7 @@
 .article-dek { margin-top: 18px; }
 .article-hero-media {
   margin-top: 24px;
+  max-width: 980px;
   border: 1px solid var(--b1);
   background: rgba(7,7,15,0.88);
   position: relative;

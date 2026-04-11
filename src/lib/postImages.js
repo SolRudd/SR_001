@@ -11,7 +11,7 @@ export function getJournalCoverImage() {
 
 export function getPostHeroImage(post) {
   if (!post?.articleImage) {
-    return getJournalCoverImage();
+    return null;
   }
 
   return {

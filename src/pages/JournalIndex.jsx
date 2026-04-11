@@ -3,10 +3,7 @@ import { IconArrow, IconPen, IconRadar, IconTerm } from "../components/Icons";
 import { posts, formatPostDate } from "../content/posts";
 import { usePageMetadata } from "../lib/metadata";
 import { getJournalIndexMetadata } from "../lib/pageMetadata";
-import {
-  getJournalCoverImage,
-  getPostCardImage,
-} from "../lib/postImages";
+import { getPostCardImage } from "../lib/postImages";
 import {
   buildHomeSectionPath,
   buildPostPath,
@@ -22,7 +19,6 @@ const COVERAGE_AREAS = [
 export default function JournalIndex() {
   const [featuredPost, ...archivePosts] = posts;
   const nextReadPost = archivePosts[0] ?? featuredPost;
-  const coverImage = getJournalCoverImage();
   const featuredCardImage = getPostCardImage(featuredPost);
 
   usePageMetadata(getJournalIndexMetadata());
@@ -118,17 +114,6 @@ export default function JournalIndex() {
               </a>
             </article>
           </div>
-
-          <figure className="journal-cover reveal revealed">
-            <img
-              src={coverImage.src}
-              alt={coverImage.alt}
-              className="journal-cover-image"
-              loading="eager"
-              decoding="async"
-              fetchPriority="high"
-            />
-          </figure>
         </div>
       </section>
 
@@ -155,19 +140,21 @@ export default function JournalIndex() {
 
                   return (
                     <article className="journal-row" key={post.slug}>
-                      <a
-                        href={buildPostPath(post)}
-                        className="journal-row-media"
-                        aria-label={`Read ${post.title}`}
-                      >
-                        <img
-                          src={cardImage.src}
-                          alt={cardImage.alt}
-                          className="journal-row-image"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </a>
+                      {cardImage ? (
+                        <a
+                          href={buildPostPath(post)}
+                          className="journal-row-media"
+                          aria-label={`Read ${post.title}`}
+                        >
+                          <img
+                            src={cardImage.src}
+                            alt={cardImage.alt}
+                            className="journal-row-image"
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </a>
+                      ) : null}
                       <div className="journal-row-body">
                         <div className="journal-row-head">
                           <div className="journal-row-category">{post.category}</div>
