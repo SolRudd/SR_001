@@ -64,8 +64,8 @@ export default function JournalIndex() {
               </div>
               <h1 className="journal-title">Operator notes, build logs, and technical essays.</h1>
               <p className="journal-body">
-                A publishing layer for real execution notes. Product decisions, AI workflow
-                writeups, frontend systems thinking, and founder-side lessons from live work.
+                Sharp notes on product delivery, AI workflows, frontend systems, and the
+                technical decisions behind live work.
               </p>
               <div className="journal-meta-row">
                 <a href={buildHomeSectionPath("work")} className="journal-inline-link">
