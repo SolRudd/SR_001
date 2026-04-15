@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://solrudd.co.uk/</loc>
-    <lastmod>2026-04-10</lastmod>
+    <lastmod>2026-04-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -16,11 +16,21 @@
   </url>
   <url>
     <loc>https://solrudd.co.uk/journal/</loc>
-    <lastmod>2026-04-10</lastmod>
+    <lastmod>2026-04-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <image:image>
       <image:loc>https://solrudd.co.uk/</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://solrudd.co.uk/journal/building-a-more-native-authoring-layer-for-wordpress/</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://solrudd.co.uk/articles/heroes/markdown-native-wordpress-authoring-layer-hero.png</image:loc>
+      <image:title>A dark, technical workflow graphic showing structured markdown input being transformed into cleaner native block-style output.</image:title>
     </image:image>
   </url>
   <url>

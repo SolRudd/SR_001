@@ -559,6 +559,24 @@
   flex-direction: column;
   gap: 24px;
 }
+.article-figure {
+  margin: 8px 0 6px;
+  border: 1px solid var(--b1);
+  background: rgba(7,7,15,0.82);
+  overflow: hidden;
+}
+.article-figure-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.article-figure-caption {
+  padding: 14px 18px 16px;
+  border-top: 1px solid var(--b0);
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--ts);
+}
 .article-block { min-width: 0; }
 .article-prose h2,
 .article-prose h3 {

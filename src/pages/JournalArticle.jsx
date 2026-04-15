@@ -108,6 +108,22 @@ function renderBlock(block) {
           <code>{block.code}</code>
         </pre>
       );
+    case "image":
+      return (
+        <figure className="article-figure">
+          <img
+            src={block.src}
+            alt={block.alt ?? ""}
+            className="article-figure-image"
+            loading={block.priority ? "eager" : "lazy"}
+            decoding="async"
+            fetchPriority={block.priority ? "high" : undefined}
+          />
+          {block.caption ? (
+            <figcaption className="article-figure-caption">{block.caption}</figcaption>
+          ) : null}
+        </figure>
+      );
     case "paragraph":
     default:
       return (

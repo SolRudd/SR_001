@@ -1,4 +1,5 @@
 import buzzboostFounderSiteLog from "./buzzboost-founder-site-log.js";
+import buildingAMoreNativeAuthoringLayerForWordPress from "./building-a-more-native-authoring-layer-for-wordpress.js";
 import claudeMythosAiVulnerabilityArmsRace from "./claude-mythos-ai-vulnerability-arms-race.js";
 import codexOpenclawAndRealAgenticWorkflows from "./codex-openclaw-and-real-agentic-workflows.js";
 import codexTerminalAiWorkflows2026 from "./codex-terminal-ai-workflows-2026.js";
@@ -16,6 +17,7 @@ const POST_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
 });
 
 const POSTS = [
+  buildingAMoreNativeAuthoringLayerForWordPress,
   claudeMythosAiVulnerabilityArmsRace,
   whyImTestingLocalAiAgents,
   whyAiAgentsNeedGuardrails,
