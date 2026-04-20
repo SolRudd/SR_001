@@ -34,6 +34,7 @@ export default function SolRuddLanding() {
       mainClassName="home-main"
     >
       <div className="cursor-glow" ref={glowRef} />
+      {!isOgHomepageSurface && <div className="scroll-progress" aria-hidden="true" />}
       <HomeMarqueeBand />
       <HeroSection />
       <OperatorStackSection />

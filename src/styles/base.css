@@ -153,7 +153,54 @@ body::before {
 /* ── scroll reveal ── */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.75s ease, transform 0.75s ease;
+  transform: translate3d(0, 20px, 0);
+  filter: blur(4px);
+  transition:
+    opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: transform, opacity;
 }
-.reveal.revealed { opacity: 1; transform: translateY(0); }
+.reveal.revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  filter: blur(0);
+}
+
+/* directional variants — used selectively for composed sections */
+.reveal-left  { transform: translate3d(-22px, 8px, 0); }
+.reveal-right { transform: translate3d(22px, 8px, 0); }
+.reveal-tight { transform: translate3d(0, 12px, 0); }
+.reveal-left.revealed,
+.reveal-right.revealed,
+.reveal-tight.revealed { transform: translate3d(0, 0, 0); }
+
+/* ── scroll progress whisker ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform-origin: 0 50%;
+  transform: scaleX(var(--sp, 0));
+  background: linear-gradient(
+    90deg,
+    rgba(0, 212, 255, 0) 0%,
+    rgba(0, 212, 255, 0.35) 40%,
+    rgba(0, 212, 255, 0.55) 100%
+  );
+  pointer-events: none;
+  z-index: 1001;
+  will-change: transform;
+  contain: layout paint;
+}
+.home-page .scroll-progress {
+  background: linear-gradient(
+    90deg,
+    rgba(77, 163, 255, 0) 0%,
+    rgba(77, 163, 255, 0.3) 40%,
+    rgba(0, 209, 255, 0.55) 100%
+  );
+}

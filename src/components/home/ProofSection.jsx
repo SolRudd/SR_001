@@ -32,8 +32,12 @@ export default function ProofSection() {
         </div>
 
         <div className="proof-grid">
-          {REVIEWS.map(({ name, quote }) => (
-            <article className="proof-card reveal" key={name}>
+          {REVIEWS.map(({ name, quote }, index) => (
+            <article
+              className="proof-card reveal reveal-tight"
+              key={name}
+              style={{ "--reveal-delay": `${Math.min(index, 4) * 80}ms` }}
+            >
               <div className="proof-card-top">
                 <div className="proof-card-stars" aria-hidden="true">
                   <span>★</span>

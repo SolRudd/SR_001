@@ -6,7 +6,7 @@ export default function SignalSection() {
     <section id="signal" className="sec defer-section">
       <div className="wrap">
         <div className="signal-layout">
-          <div className="reveal">
+          <div className="reveal reveal-left">
             <div className="eyebrow">
               <IconRadar /> Signal
             </div>
@@ -20,7 +20,7 @@ export default function SignalSection() {
               for experiments, AI workflows, systems thinking, and community-led build work.
             </p>
           </div>
-          <div className="signal-terminal reveal">
+          <div className="signal-terminal reveal reveal-right" style={{ "--reveal-delay": "140ms" }}>
             <div className="term-head">
               <div className="term-dots">
                 <span />

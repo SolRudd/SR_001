@@ -21,14 +21,17 @@ export default function WorkSection() {
         </div>
 
         <div className="proj-grid">
-          {PROJECTS.map((project) => (
+          {PROJECTS.map((project, index) => (
             <a
               key={project.num}
-              className="proj reveal"
+              className="proj reveal reveal-tight"
               href={project.url}
               target={project.url.startsWith("http") ? "_blank" : undefined}
               rel={project.url.startsWith("http") ? "noreferrer" : undefined}
-              style={{ "--accent": project.accent }}
+              style={{
+                "--accent": project.accent,
+                "--reveal-delay": `${Math.min(index, 5) * 70}ms`,
+              }}
             >
               <div className="proj-corner tl" />
               <div className="proj-corner tr" />

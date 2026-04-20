@@ -28,22 +28,23 @@ export default function useHomepageSurfaceEffects(pageRef, glowRef, isOgHomepage
       isOgHomepageSurface || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const supportsPointerEffects =
       window.matchMedia("(pointer: fine)").matches && !prefersReducedMotion;
-
-    if (!revealElements.length && !supportsPointerEffects) {
-      return undefined;
-    }
+    const progressElement = pageElement.querySelector(".scroll-progress");
 
     if (prefersReducedMotion) {
       revealElements.forEach((element) => element.classList.add("revealed"));
+      if (progressElement) {
+        progressElement.style.setProperty("--sp", "0");
+      }
       return undefined;
     }
 
-    let frame = 0;
+    let pointerFrame = 0;
+    let scrollFrame = 0;
     let nextX = 0;
     let nextY = 0;
 
     const flushMousePosition = () => {
-      frame = 0;
+      pointerFrame = 0;
 
       if (glowElement) {
         glowElement.style.setProperty("--mx", `${nextX}px`);
@@ -55,13 +56,39 @@ export default function useHomepageSurfaceEffects(pageRef, glowRef, isOgHomepage
       nextX = event.clientX;
       nextY = event.clientY;
 
-      if (!frame) {
-        frame = window.requestAnimationFrame(flushMousePosition);
+      if (!pointerFrame) {
+        pointerFrame = window.requestAnimationFrame(flushMousePosition);
       }
     };
 
     if (supportsPointerEffects && glowElement) {
       window.addEventListener("mousemove", onMove, { passive: true });
+    }
+
+    const flushScrollProgress = () => {
+      scrollFrame = 0;
+
+      if (!progressElement) {
+        return;
+      }
+
+      const doc = document.documentElement;
+      const max = Math.max(1, doc.scrollHeight - window.innerHeight);
+      const ratio = Math.min(1, Math.max(0, window.scrollY / max));
+      progressElement.style.setProperty("--sp", ratio.toFixed(4));
+    };
+
+    const onScroll = () => {
+      if (scrollFrame) {
+        return;
+      }
+      scrollFrame = window.requestAnimationFrame(flushScrollProgress);
+    };
+
+    if (progressElement) {
+      flushScrollProgress();
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
     }
 
     const io =
@@ -87,8 +114,17 @@ export default function useHomepageSurfaceEffects(pageRef, glowRef, isOgHomepage
         window.removeEventListener("mousemove", onMove);
       }
 
-      if (frame) {
-        window.cancelAnimationFrame(frame);
+      if (progressElement) {
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", onScroll);
+      }
+
+      if (pointerFrame) {
+        window.cancelAnimationFrame(pointerFrame);
+      }
+
+      if (scrollFrame) {
+        window.cancelAnimationFrame(scrollFrame);
       }
 
       io?.disconnect();

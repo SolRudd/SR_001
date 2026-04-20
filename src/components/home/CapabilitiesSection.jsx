@@ -6,7 +6,7 @@ export default function CapabilitiesSection() {
     <section id="build" className="sec defer-section">
       <div className="wrap">
         <div className="caps-layout">
-          <div className="reveal">
+          <div className="reveal reveal-left">
             <div className="eyebrow">
               <IconPen /> Capabilities
             </div>
@@ -35,7 +35,7 @@ export default function CapabilitiesSection() {
             </div>
           </div>
 
-          <div className="reveal">
+          <div className="reveal reveal-right" style={{ "--reveal-delay": "120ms" }}>
             <div className="hud-card">
               <div className="hud-head">
                 <div>

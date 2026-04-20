@@ -9,13 +9,15 @@ export default function HeroSection() {
       </div>
       <div className="wrap">
         <div className="hero-grid">
-          <div className="reveal">
-            <div className="badge">
-              <div className="dot" />
-              Live Operator Feed&nbsp;&nbsp;//&nbsp;&nbsp;Active
+          <div className="hero-copy">
+            <div className="reveal reveal-left" style={{ "--reveal-delay": "40ms" }}>
+              <div className="badge">
+                <div className="dot" />
+                Live Operator Feed&nbsp;&nbsp;//&nbsp;&nbsp;Active
+              </div>
             </div>
 
-            <h1 className="h1">
+            <h1 className="h1 reveal reveal-tight" style={{ "--reveal-delay": "120ms" }}>
               I build
               <br />
               <span className="c" data-text="websites">
@@ -28,7 +30,7 @@ export default function HeroSection() {
               <span className="d">&amp; agentic systems.</span>
             </h1>
 
-            <div className="hero-body">
+            <div className="hero-body reveal reveal-tight" style={{ "--reveal-delay": "220ms" }}>
               <p>
                 I'm Sol Rudd. I build premium websites, AI tools, autonomous agents,
                 and technical infrastructure for founders and real-world businesses
@@ -44,7 +46,7 @@ export default function HeroSection() {
               </div>
             </div>
 
-            <div className="actions">
+            <div className="actions reveal reveal-tight" style={{ "--reveal-delay": "300ms" }}>
               <a href="#work" className="btn btn-solid">
                 Deploy Work <IconArrow />
               </a>
@@ -54,7 +56,7 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <div className="hud-stack reveal">
+          <div className="hud-stack reveal reveal-right" style={{ "--reveal-delay": "180ms" }}>
             <div className="hud-card">
               <div className="hud-scan" />
               <div className="hud-head">
