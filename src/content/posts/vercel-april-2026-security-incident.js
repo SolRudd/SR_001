@@ -14,8 +14,6 @@ const VERCEL_SENSITIVE_ENV_VARS_URL =
 const VERCEL_DEPLOYMENT_PROTECTION_URL = "https://vercel.com/docs/security/deployment-protection";
 const VERCEL_MANAGING_DEPLOYMENTS_URL = "https://vercel.com/docs/deployments/managing-deployments";
 
-// Draft only. Intentionally not imported in src/content/posts/index.js.
-// Update publishedAt and hero image when you are ready to publish.
 const post = {
   slug: "vercel-april-2026-security-incident",
   title: "Vercel April 2026 security incident: what happened and what users should do",
@@ -43,7 +41,7 @@ const post = {
     "Deployment protection",
   ],
   relatedSlugs: [
-    "claude-mythos-ai-security",
+    "claude-mythos-ai-vulnerability-arms-race",
     "why-ai-agents-need-guardrails",
     "what-actually-makes-modern-digital-delivery-work",
   ],
@@ -163,8 +161,8 @@ const post = {
         },
         ", ",
         {
-          label: "Claude Mythos and the new AI security reality",
-          href: buildInsightsPostPath("claude-mythos-ai-security"),
+          label: "Claude Mythos and the AI Vulnerability Arms Race",
+          href: buildInsightsPostPath("claude-mythos-ai-vulnerability-arms-race"),
         },
         ", and ",
         {
@@ -380,11 +378,10 @@ Suggested internal links:
 - Why AI Agents Need Guardrails
   /journal/why-ai-agents-need-guardrails/
 - Claude Mythos and the new AI security reality
-  /insights/claude-mythos-ai-security/
+  /insights/claude-mythos-ai-vulnerability-arms-race/
 - What actually makes modern digital delivery work
   /journal/what-actually-makes-modern-digital-delivery-work/
 
 Publish note:
-- This file is intentionally unimported, so it stays out of the live journal index, prerendered metadata, sitemap, and related discovery surfaces.
-- Update publishedAt and swap in a dedicated hero image if needed before importing it into src/content/posts/index.js.
+- A dedicated hero image can still be added later if you want a more bespoke card and archive visual.
 */

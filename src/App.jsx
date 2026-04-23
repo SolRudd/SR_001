@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import SolRuddLandingPage from "./pages/SolRuddLanding";
 import JournalIndex from "./pages/JournalIndex";
 import JournalArticle from "./pages/JournalArticle";
@@ -10,10 +10,52 @@ import { isCanonicalPostPathname, resolveRoute } from "./lib/routes";
 
 const SocialLaunchCardPreview = lazy(() => import("./pages/SocialLaunchCardPreview"));
 
+function scrollToHashTarget() {
+  const hash = window.location.hash;
+
+  if (!hash) {
+    return;
+  }
+
+  const targetId = decodeURIComponent(hash.slice(1));
+  const target = targetId ? document.getElementById(targetId) : null;
+
+  if (!target) {
+    return;
+  }
+
+  const header = document.querySelector(".hdr");
+  const headerOffset = header instanceof HTMLElement
+    ? header.getBoundingClientRect().height + 24
+    : 96;
+  const targetTop = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  window.scrollTo({
+    top: Math.max(targetTop, 0),
+    behavior: reduceMotion ? "auto" : "smooth",
+  });
+}
+
 export default function App() {
   const searchParams = new URLSearchParams(window.location.search);
   const route = resolveRoute(window.location.pathname);
   const isOgHomepageSurface = searchParams.get("surface") === "og-homepage";
+
+  useEffect(() => {
+    const handleHashNavigation = () => {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(scrollToHashTarget);
+      });
+    };
+
+    handleHashNavigation();
+    window.addEventListener("hashchange", handleHashNavigation);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashNavigation);
+    };
+  }, [route.type]);
 
   let page = <NotFound />;
 

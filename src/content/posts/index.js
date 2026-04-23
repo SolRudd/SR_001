@@ -6,6 +6,7 @@ import codexTerminalAiWorkflows2026 from "./codex-terminal-ai-workflows-2026.js"
 import fromDesignReferenceToProductionReact from "./from-design-reference-to-production-react.js";
 import greentracerSignalProduct from "./greentracer-signal-product.js";
 import howToBuildAWebsiteThatStillWinsInAiSearch2026 from "./how-to-build-a-website-that-still-wins-in-ai-search-2026.js";
+import vercelApril2026SecurityIncident from "./vercel-april-2026-security-incident.js";
 import whatActuallyMakesModernDigitalDeliveryWork from "./what-actually-makes-modern-digital-delivery-work.js";
 import whyAiAgentsNeedGuardrails from "./why-ai-agents-need-guardrails.js";
 import whyImTestingLocalAiAgents from "./why-im-testing-local-ai-agents.js";
@@ -18,6 +19,7 @@ const POST_DATE_FORMATTER = new Intl.DateTimeFormat("en-GB", {
 });
 
 const POSTS = [
+  vercelApril2026SecurityIncident,
   howToBuildAWebsiteThatStillWinsInAiSearch2026,
   buildingAMoreNativeAuthoringLayerForWordPress,
   claudeMythosAiVulnerabilityArmsRace,
